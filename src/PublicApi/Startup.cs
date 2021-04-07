@@ -1,5 +1,4 @@
 using AutoMapper;
-using BlazorShared;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,9 +19,6 @@ using Inventura.ApplicationCore.Services;
 using Inventura.Infrastructure.Data;
 using Inventura.Infrastructure.Identity;
 using Inventura.Infrastructure.Logging;
-using Microsoft.AspNetCore.Http;
-using Inventura.PublicApi.Util;
-using Inventura.Infrastructure.Services;
 
 namespace Inventura.PublicApi.Util
 {
