@@ -37,7 +37,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
         {
             var response = new UpdateFoodProductResponse(request.CorrelationId());
 
-            var updatedFoodProduct = _foodProductService.PutAsync(
+            var updatedFoodProduct = await _foodProductService.PutAsync(
                 new FoodProduct
                 {
                     Id = request.Id,

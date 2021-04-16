@@ -68,8 +68,8 @@ namespace Inventura.ApplicationCore.Services
             var foodProduct = await _foodProductRepository.GetByIdAsync(t.Id);
             Guard.Against.EntityNotFound(foodProduct, nameof(FoodProduct));
 
-            foodProduct.EditName(t.Name);
-            foodProduct.EditNutritionalValue(t.Calories, t.Protein, t.Carbohydrates, t.Fats);
+            foodProduct.Name = t.Name;
+            foodProduct.Calories = t.Calories;
             await _foodProductRepository.UpdateAsync(foodProduct);
 
             return foodProduct;
