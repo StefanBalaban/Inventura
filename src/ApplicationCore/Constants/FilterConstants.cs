@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inventura.ApplicationCore.Constants
 {
-    class FilterConstants
+    public class FilterConstants
     {
         public const string EQUAL = "==";
         public const string LT = "<";

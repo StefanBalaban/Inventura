@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Editing;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Inventura.Generator
+namespace Inventura.Generator.Generators
 {
     public class ServicesSyntaxGenerator
     {
@@ -16,11 +16,11 @@ namespace Inventura.Generator
         private List<KeyValuePair<string, string>> _propertiesWithAttributes = new List<KeyValuePair<string, string>>();
         private string _repositoryFieldName;
 
-        public SyntaxNode GenerateServiceClassNode(ClassDeclarationSyntax classNode,
+        public SyntaxNode GenerateServiceClassNode(string modelClassName,
             List<KeyValuePair<string, string>> propertiesWithAttributes)
         {
             _propertiesWithAttributes = propertiesWithAttributes;
-            _modelClassName = classNode.Identifier.Text;
+            _modelClassName = modelClassName;
             _repositoryFieldName = $"_{_modelClassName.ToCamelCase()}Repository";
             _generator = SyntaxGenerator.GetGenerator(_workspace, LanguageNames.CSharp);
 
@@ -163,100 +163,101 @@ namespace Inventura.Generator
 
         private SyntaxNode GenerateDeleteAsyncMethod()
         {
-            return MethodDeclaration(
-                    GenericName(
-                            Identifier("Task"))
-                        .WithTypeArgumentList(
-                            TypeArgumentList(
-                                SingletonSeparatedList<TypeSyntax>(
-                                    PredefinedType(
-                                        Token(SyntaxKind.BoolKeyword))))),
-                    Identifier("DeleteAsync"))
-                .WithModifiers(
-                    TokenList(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AsyncKeyword)))
-                .WithParameterList(
-                    ParameterList(
-                        SingletonSeparatedList(
-                            Parameter(
-                                    Identifier("id"))
-                                .WithType(
-                                    PredefinedType(
-                                        Token(SyntaxKind.IntKeyword))))))
-                .WithBody(
-                    Block(
-                        LocalDeclarationStatement(
-                            VariableDeclaration(
-                                    IdentifierName(
-                                        Identifier(
-                                            TriviaList(),
-                                            SyntaxKind.VarKeyword,
-                                            "var",
-                                            "var",
-                                            TriviaList())))
-                                .WithVariables(
-                                    SingletonSeparatedList(
-                                        VariableDeclarator(
-                                                Identifier(_modelClassName.ToCamelCase()))
-                                            .WithInitializer(
-                                                EqualsValueClause(
-                                                    AwaitExpression(
+            return
+                MethodDeclaration(
+                        GenericName(
+                                Identifier("Task"))
+                            .WithTypeArgumentList(
+                                TypeArgumentList(
+                                    SingletonSeparatedList<TypeSyntax>(
+                                        PredefinedType(
+                                            Token(SyntaxKind.BoolKeyword))))),
+                        Identifier("DeleteAsync"))
+                    .WithModifiers(
+                        TokenList(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AsyncKeyword)))
+                    .WithParameterList(
+                        ParameterList(
+                            SingletonSeparatedList(
+                                Parameter(
+                                        Identifier("id"))
+                                    .WithType(
+                                        PredefinedType(
+                                            Token(SyntaxKind.IntKeyword))))))
+                    .WithBody(
+                        Block(
+                            LocalDeclarationStatement(
+                                VariableDeclaration(
+                                        IdentifierName(
+                                            Identifier(
+                                                TriviaList(),
+                                                SyntaxKind.VarKeyword,
+                                                "var",
+                                                "var",
+                                                TriviaList())))
+                                    .WithVariables(
+                                        SingletonSeparatedList(
+                                            VariableDeclarator(
+                                                    Identifier(_modelClassName.ToCamelCase()))
+                                                .WithInitializer(
+                                                    EqualsValueClause(
+                                                        AwaitExpression(
+                                                            InvocationExpression(
+                                                                    MemberAccessExpression(
+                                                                        SyntaxKind.SimpleMemberAccessExpression,
+                                                                        IdentifierName(_repositoryFieldName),
+                                                                        IdentifierName("GetByIdAsync")))
+                                                                .WithArgumentList(
+                                                                    ArgumentList(
+                                                                        SingletonSeparatedList(
+                                                                            Argument(
+                                                                                IdentifierName("id"))))))))))),
+                            ExpressionStatement(
+                                InvocationExpression(
+                                        MemberAccessExpression(
+                                            SyntaxKind.SimpleMemberAccessExpression,
+                                            MemberAccessExpression(
+                                                SyntaxKind.SimpleMemberAccessExpression,
+                                                IdentifierName("Guard"),
+                                                IdentifierName("Against")),
+                                            IdentifierName("EntityNotFound")))
+                                    .WithArgumentList(
+                                        ArgumentList(
+                                            SeparatedList<ArgumentSyntax>(
+                                                new SyntaxNodeOrToken[]
+                                                {
+                                                    Argument(
+                                                        IdentifierName(_modelClassName.ToCamelCase())),
+                                                    Token(SyntaxKind.CommaToken),
+                                                    Argument(
                                                         InvocationExpression(
-                                                                MemberAccessExpression(
-                                                                    SyntaxKind.SimpleMemberAccessExpression,
-                                                                    IdentifierName(_repositoryFieldName),
-                                                                    IdentifierName("GetByIdAsync")))
+                                                                IdentifierName(
+                                                                    Identifier(
+                                                                        TriviaList(),
+                                                                        SyntaxKind.NameOfKeyword,
+                                                                        "nameof",
+                                                                        "nameof",
+                                                                        TriviaList())))
                                                             .WithArgumentList(
                                                                 ArgumentList(
                                                                     SingletonSeparatedList(
                                                                         Argument(
-                                                                            IdentifierName("id"))))))))))),
-                        ExpressionStatement(
-                            InvocationExpression(
-                                    MemberAccessExpression(
-                                        SyntaxKind.SimpleMemberAccessExpression,
-                                        MemberAccessExpression(
-                                            SyntaxKind.SimpleMemberAccessExpression,
-                                            IdentifierName("Guard"),
-                                            IdentifierName("Against")),
-                                        IdentifierName("EntityNotFound")))
-                                .WithArgumentList(
-                                    ArgumentList(
-                                        SeparatedList<ArgumentSyntax>(
-                                            new SyntaxNodeOrToken[]
-                                            {
-                                                Argument(
-                                                    IdentifierName(_modelClassName.ToCamelCase())),
-                                                Token(SyntaxKind.CommaToken),
-                                                Argument(
-                                                    InvocationExpression(
-                                                            IdentifierName(
-                                                                Identifier(
-                                                                    TriviaList(),
-                                                                    SyntaxKind.NameOfKeyword,
-                                                                    "nameof",
-                                                                    "nameof",
-                                                                    TriviaList())))
-                                                        .WithArgumentList(
-                                                            ArgumentList(
-                                                                SingletonSeparatedList(
-                                                                    Argument(
-                                                                        IdentifierName(_modelClassName))))))
-                                            })))),
-                        ExpressionStatement(
-                            AwaitExpression(
-                                InvocationExpression(
-                                        MemberAccessExpression(
-                                            SyntaxKind.SimpleMemberAccessExpression,
-                                            IdentifierName(_repositoryFieldName),
-                                            IdentifierName("DeleteAsync")))
-                                    .WithArgumentList(
-                                        ArgumentList(
-                                            SingletonSeparatedList(
-                                                Argument(
-                                                    IdentifierName(_modelClassName.ToCamelCase()))))))),
-                        ReturnStatement(
-                            LiteralExpression(
-                                SyntaxKind.TrueLiteralExpression)))).NormalizeWhitespace();
+                                                                            IdentifierName(_modelClassName))))))
+                                                })))),
+                            ExpressionStatement(
+                                AwaitExpression(
+                                    InvocationExpression(
+                                            MemberAccessExpression(
+                                                SyntaxKind.SimpleMemberAccessExpression,
+                                                IdentifierName(_repositoryFieldName),
+                                                IdentifierName("DeleteAsync")))
+                                        .WithArgumentList(
+                                            ArgumentList(
+                                                SingletonSeparatedList(
+                                                    Argument(
+                                                        IdentifierName(_modelClassName.ToCamelCase()))))))),
+                            ReturnStatement(
+                                LiteralExpression(
+                                    SyntaxKind.TrueLiteralExpression)))).NormalizeWhitespace();
         }
 
         private SyntaxNode GeneratePutAsyncMethod()
@@ -389,26 +390,27 @@ namespace Inventura.Generator
                 ReturnStatement(
                     IdentifierName(_modelClassName.ToCamelCase())));
 
-            return MethodDeclaration(
-                    GenericName(
-                            Identifier("Task"))
-                        .WithTypeArgumentList(
-                            TypeArgumentList(
-                                SingletonSeparatedList<TypeSyntax>(
-                                    IdentifierName(_modelClassName)))),
-                    Identifier("PutAsync"))
-                .WithModifiers(
-                    TokenList(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AsyncKeyword)))
-                .WithParameterList(
-                    ParameterList(
-                        SingletonSeparatedList(
-                            Parameter(
-                                    Identifier("t"))
-                                .WithType(
-                                    IdentifierName(_modelClassName)))))
-                .WithBody(
-                    Block(
-                        listOfStatements)).NormalizeWhitespace();
+            return
+                MethodDeclaration(
+                        GenericName(
+                                Identifier("Task"))
+                            .WithTypeArgumentList(
+                                TypeArgumentList(
+                                    SingletonSeparatedList<TypeSyntax>(
+                                        IdentifierName(_modelClassName)))),
+                        Identifier("PutAsync"))
+                    .WithModifiers(
+                        TokenList(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AsyncKeyword)))
+                    .WithParameterList(
+                        ParameterList(
+                            SingletonSeparatedList(
+                                Parameter(
+                                        Identifier("t"))
+                                    .WithType(
+                                        IdentifierName(_modelClassName)))))
+                    .WithBody(
+                        Block(
+                            listOfStatements)).NormalizeWhitespace();
         }
 
         private SyntaxNode GeneratePostAsyncMethod()

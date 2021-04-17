@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Inventura.Generator
+namespace Inventura.Generator.Generators
 {
     public static class StringExtensions
     {

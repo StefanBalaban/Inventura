@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Inventura.Generator
+namespace Inventura.Generator.Generators
 {
     public class PropertiesHelper
     {
+        public List<KeyValuePair<KeyValuePair<string, string>, string>> AttributesWithArguments =
+            new List<KeyValuePair<KeyValuePair<string, string>, string>>();
 
         public List<KeyValuePair<string, string>> PropertiesWithAttributes = new List<KeyValuePair<string, string>>();
-        public List<KeyValuePair<string, string>> AttributesWithArguments = new List<KeyValuePair<string, string>>();
+        public List<AttributesWithInfo> AttributesWithInfo { get; set; } = new List<AttributesWithInfo>();
+
         public void ExtractPropertiesAndAttrbitues(IEnumerable<MemberDeclarationSyntax> members)
         {
-
-
             foreach (var memberDeclarationSyntax in members)
             {
                 var attributeName = new List<string>();
-                var attributeArgument = new List<string>();
                 var property = memberDeclarationSyntax as PropertyDeclarationSyntax;
                 if (property != null)
                 {
@@ -36,23 +33,31 @@ namespace Inventura.Generator
                             {
                                 var arguments = attribute.ArgumentList?.Arguments;
                                 if (arguments.HasValue)
-                                    foreach (var argument in arguments.Value.ToList())
+                                    AttributesWithInfo.Add(new AttributesWithInfo
                                     {
-                                        AttributesWithArguments.Add(
-                                            new KeyValuePair<string, string>(
-                                                property.Identifier.Text,
-                                                argument.NormalizeWhitespace().ToFullString())
-                                        );
-                                    }
+                                        PropertyIdentifier = property.Identifier.Text,
+                                        Arguments = AddArguments(arguments.Value.ToList()),
+                                        Type = property.Type.NormalizeWhitespace().ToFullString()
+                                    });
                             }
                         }
                     }
 
                     if (attributeName != null)
-                        attributeName.ForEach(x => PropertiesWithAttributes.Add(new KeyValuePair<string, string>(property.Identifier.Text, x)));
+                        attributeName.ForEach(x =>
+                            PropertiesWithAttributes.Add(
+                                new KeyValuePair<string, string>(property.Identifier.Text, x)));
                 }
-
             }
+        }
+
+        private List<string> AddArguments(List<AttributeArgumentSyntax> arguments)
+        {
+            var argumentList = new List<string>();
+            foreach (var argument in arguments)
+                argumentList.Add(argument.NormalizeWhitespace().ToFullString());
+
+            return argumentList;
         }
     }
 }
