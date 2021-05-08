@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Inventura.Generator.Generators
 {
-    public class ArgumentFilterConstants
+    public class ArgumentFilterConstantsHelpers
     {
         public string EQUAL = $"{nameof(FilterConstants)}.{nameof(FilterConstants.EQUAL)}";
         public string LT = $"{nameof(FilterConstants)}.{nameof(FilterConstants.LT)}";
@@ -14,7 +14,7 @@ namespace Inventura.Generator.Generators
         public string GTE = $"{nameof(FilterConstants)}.{nameof(FilterConstants.GTE)}";
         public List<FilterAndSyntax> FilterAndSyntaxList = new List<FilterAndSyntax>();
 
-        public ArgumentFilterConstants()
+        public ArgumentFilterConstantsHelpers()
         {
             FilterAndSyntaxList = new List<FilterAndSyntax>
             {

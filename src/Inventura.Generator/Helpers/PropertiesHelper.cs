@@ -7,10 +7,8 @@ namespace Inventura.Generator.Generators
 {
     public class PropertiesHelper
     {
-        public List<KeyValuePair<KeyValuePair<string, string>, string>> AttributesWithArguments =
-            new List<KeyValuePair<KeyValuePair<string, string>, string>>();
-
         public List<KeyValuePair<string, string>> PropertiesWithAttributes = new List<KeyValuePair<string, string>>();
+        public List<PropertiesWithInfo> PropertiesWithInfos { get; set; } = new List<PropertiesWithInfo>();
         public List<AttributesWithInfo> AttributesWithInfo { get; set; } = new List<AttributesWithInfo>();
 
         public void ExtractPropertiesAndAttrbitues(IEnumerable<MemberDeclarationSyntax> members)
@@ -37,6 +35,15 @@ namespace Inventura.Generator.Generators
                                     {
                                         PropertyIdentifier = property.Identifier.Text,
                                         Arguments = AddArguments(arguments.Value.ToList()),
+                                        Type = property.Type.NormalizeWhitespace().ToFullString()
+                                    });
+                            }
+                            if (attribute.Name.NormalizeWhitespace().ToFullString()
+                                .Equals("Post"))
+                            {
+                                    PropertiesWithInfos.Add(new PropertiesWithInfo()
+                                    {
+                                        Identifier = property.Identifier.Text,
                                         Type = property.Type.NormalizeWhitespace().ToFullString()
                                     });
                             }

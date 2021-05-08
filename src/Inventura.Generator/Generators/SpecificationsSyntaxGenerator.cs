@@ -9,7 +9,7 @@ namespace Inventura.Generator.Generators
 {
     internal class SpecificationsSyntaxGenerator
     {
-        private readonly ArgumentFilterConstants _argumentFilterConstants = new ArgumentFilterConstants();
+        private readonly ArgumentFilterConstantsHelpers _argumentFilterConstantsHelpers = new ArgumentFilterConstantsHelpers();
         private List<AttributesWithInfo> _attributes = new List<AttributesWithInfo>();
         private string _modelClassName;
 
@@ -197,17 +197,17 @@ namespace Inventura.Generator.Generators
                                                             MemberAccessExpression(
                                                                 SyntaxKind.SimpleMemberAccessExpression,
                                                                 IdentifierName(
-                                                                    $"{x.PropertyIdentifier.ToCamelCase()}{_argumentFilterConstants.GetArgumentSufix(y)}"),
+                                                                    $"{x.PropertyIdentifier.ToCamelCase()}{_argumentFilterConstantsHelpers.GetArgumentSufix(y)}"),
                                                                 IdentifierName("HasValue"))),
                                                         BinaryExpression(
-                                                            _argumentFilterConstants.FilterAndSyntaxList
+                                                            _argumentFilterConstantsHelpers.FilterAndSyntaxList
                                                                 .FirstOrDefault(z => z.Argument == y).SyntaxKind,
                                                             MemberAccessExpression(
                                                                 SyntaxKind.SimpleMemberAccessExpression,
                                                                 IdentifierName("i"),
                                                                 IdentifierName(x.PropertyIdentifier)),
                                                             IdentifierName(
-                                                                $"{x.PropertyIdentifier.ToCamelCase()}{_argumentFilterConstants.GetArgumentSufix(y)}"))))))))))
+                                                                $"{x.PropertyIdentifier.ToCamelCase()}{_argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))))))))))
                 )
             );
 
@@ -223,7 +223,7 @@ namespace Inventura.Generator.Generators
                     syntaxNodeOrTokenList.Add(
                         Parameter(
                                 Identifier(
-                                    $"{x.PropertyIdentifier.ToCamelCase()}{_argumentFilterConstants.GetArgumentSufix(y)}"))
+                                    $"{x.PropertyIdentifier.ToCamelCase()}{_argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))
                             .WithType(NullableType(
                                 IdentifierName(x.Type)))
                     );

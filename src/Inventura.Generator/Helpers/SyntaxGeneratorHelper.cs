@@ -7,6 +7,7 @@ namespace Inventura.Generator.Generators
 {
     public class SyntaxGeneratorHelper
     {
+        private readonly EndpointSyntaxGenerator _endpointSyntaxGenerator = new EndpointSyntaxGenerator();
         private readonly InterfaceSyntaxGenerator _interfaceSyntayGenerator = new InterfaceSyntaxGenerator();
         private readonly PropertiesHelper _propertiesHelper = new PropertiesHelper();
         private readonly ServicesSyntaxGenerator _servicesSyntaxGenerator = new ServicesSyntaxGenerator();
@@ -15,7 +16,6 @@ namespace Inventura.Generator.Generators
             new SpecificationsSyntaxGenerator();
 
         private string _modelClassName;
-
 
         public string GenerateSyntaxNode(string model)
         {
@@ -32,14 +32,22 @@ namespace Inventura.Generator.Generators
             var specificationsNode =
                 _specificationsSyntaxGenerator.GenerateSpecificationsNode(_modelClassName,
                     _propertiesHelper.AttributesWithInfo);
+            var endpointsNode = _endpointSyntaxGenerator.GenerateEndpointsNode(_modelClassName,
+                _propertiesHelper.PropertiesWithAttributes, _propertiesHelper.PropertiesWithInfos);
 
             var code = new StringBuilder();
             code.AppendLine($"// ApplicationCore\\Interfaces\\I{_modelClassName}Service.cs");
             code.AppendLine(interfaceNode.ToFullString());
             code.AppendLine($"// ApplicationCore\\Services\\{_modelClassName}Service.cs");
             code.AppendLine(serviceClassNode.ToFullString());
+            code.AppendLine(
+                $"// ApplicationCore\\Specifications\\{_modelClassName}\\{_modelClassName}FilterPaginatedSpecification.cs");
+            code.AppendLine(
+                $"// ApplicationCore\\Specifications\\{_modelClassName}\\{_modelClassName}FilterSpecification.cs");
             code.AppendLine(specificationsNode.ToFullString());
-            //specificationsNode.ToList().ForEach(x => code.AppendLine(x.ToFullString()));
+            code.AppendLine("// Infrastructure\\Data\\Context.cs");
+            code.AppendLine($"public DbSet<{_modelClassName}> {_modelClassName} {{ get; set; }}");
+            code.AppendLine(endpointsNode.ToFullString());
 
             return code.ToString();
         }
