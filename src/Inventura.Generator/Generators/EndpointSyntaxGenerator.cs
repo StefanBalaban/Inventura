@@ -43,7 +43,14 @@ namespace Inventura.Generator.Generators
 
         private IEnumerable<MemberDeclarationSyntax> GenerateDto()
         {
-            throw new NotImplementedException();
+            return new List<MemberDeclarationSyntax>
+            {
+                ClassDeclaration($"{_modelClassName}Dto")
+                                .WithModifiers(
+                                    TokenList(
+                                        Token(SyntaxKind.PublicKeyword)))
+                                .WithMembers(GenerateClassMembers("Dto"))
+            };
         }
 
         private IEnumerable<MemberDeclarationSyntax> GenerateUpdate()
@@ -382,14 +389,14 @@ namespace Inventura.Generator.Generators
                                         SingletonSeparatedList<BaseTypeSyntax>(
                                             SimpleBaseType(
                                                 IdentifierName("BaseRequest")))))
-                                .WithMembers(GenerateCreateRequestMembers())
+                                .WithMembers(GenerateClassMembers("Post"))
             };
         }
 
-        private SyntaxList<MemberDeclarationSyntax> GenerateCreateRequestMembers()
+        private SyntaxList<MemberDeclarationSyntax> GenerateClassMembers(string method)
         {
             var list = new List<MemberDeclarationSyntax>();
-            _propertiesWithInfo.ForEach(x => list.Add(
+            _propertiesWithInfo.Where(x => x.Method.Equals(method)).ToList().ForEach(x => list.Add(
                 PropertyDeclaration(
                         IdentifierName(x.Type),
                         Identifier(x.Identifier))
@@ -448,8 +455,8 @@ namespace Inventura.Generator.Generators
             //    GenerateListPaged());
             //list.AddRange(
             //    GenerateUpdate());
-            //list.AddRange(
-            //    GenerateDto());
+            list.AddRange(
+               GenerateDto());
             return list;
         }
 

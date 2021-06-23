@@ -15,7 +15,7 @@ namespace Inventura.Generator.Generators
         {
             foreach (var memberDeclarationSyntax in members)
             {
-                var attributeName = new List<string>();
+                var attributeNames = new List<string>();
                 var property = memberDeclarationSyntax as PropertyDeclarationSyntax;
                 if (property != null)
                 {
@@ -25,7 +25,8 @@ namespace Inventura.Generator.Generators
                         var attribute = attributeListSyntax.Attributes.FirstOrDefault();
                         if (attribute != null)
                         {
-                            attributeName.Add(attribute.Name.NormalizeWhitespace().ToFullString());
+                            var attributeName = attribute.Name.NormalizeWhitespace().ToFullString();
+                            attributeNames.Add(attributeName);
                             if (attribute.Name.NormalizeWhitespace().ToFullString()
                                 .Equals("Get"))
                             {
@@ -38,20 +39,20 @@ namespace Inventura.Generator.Generators
                                         Type = property.Type.NormalizeWhitespace().ToFullString()
                                     });
                             }
-                            if (attribute.Name.NormalizeWhitespace().ToFullString()
-                                .Equals("Post"))
+                            if (attributeName.Equals("Post") || attributeName.Equals("Get") || attributeName.Equals("Put") || attributeName.Equals("Dto"))
                             {
-                                    PropertiesWithInfos.Add(new PropertiesWithInfo()
-                                    {
-                                        Identifier = property.Identifier.Text,
-                                        Type = property.Type.NormalizeWhitespace().ToFullString()
-                                    });
+                                PropertiesWithInfos.Add(new PropertiesWithInfo()
+                                {
+                                    Identifier = property.Identifier.Text,
+                                    Type = property.Type.NormalizeWhitespace().ToFullString(),
+                                    Method = attributeName
+                                });
                             }
                         }
                     }
 
-                    if (attributeName != null)
-                        attributeName.ForEach(x =>
+                    if (attributeNames != null)
+                        attributeNames.ForEach(x =>
                             PropertiesWithAttributes.Add(
                                 new KeyValuePair<string, string>(property.Identifier.Text, x)));
                 }
