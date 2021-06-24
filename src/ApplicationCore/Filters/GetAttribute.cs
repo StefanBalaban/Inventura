@@ -10,7 +10,7 @@ namespace Inventura.ApplicationCore.Filters
     {
         public GetAttribute(params string[] param)
         {
-            
+
         }
     }
 }

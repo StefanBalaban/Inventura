@@ -13,6 +13,7 @@ namespace Inventura.ApplicationCore.Entities
 {
     public class FoodProduct : BaseEntity, IAggregateRoot
     {
+        [Dto]
         [Get]
         [Post]
         [Put]
@@ -29,11 +30,13 @@ namespace Inventura.ApplicationCore.Entities
         [Range(1, Int32.MaxValue)]
         public int UnitOfMeasureId { get; set; }
 
+        [Dto]
         [Get(FilterConstants.GTE, FilterConstants.LTE)]
         [Post]
         [Put]
         public float Calories { get; set; }
 
+        [Dto]
         [Get(FilterConstants.EQUAL)]
         [Post]
         [Put]
