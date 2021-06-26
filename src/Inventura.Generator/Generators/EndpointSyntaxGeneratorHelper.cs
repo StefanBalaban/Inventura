@@ -212,7 +212,7 @@ namespace Inventura.Generator.Generators
         {
 
             if (endpoint.Equals("Delete") || endpoint.Equals("GetById"))
-                return 
+                return
                     Parameter(Identifier("request")).WithAttributeLists(
                             SingletonList<AttributeListSyntax>(
                                 AttributeList(
@@ -229,7 +229,7 @@ namespace Inventura.Generator.Generators
                                         Attribute(
                                             IdentifierName("FromQuery")))))).WithType(IdentifierName($"{endpoint}{modelClassName}Request"));
 
-            return 
+            return
                 Parameter(Identifier("request")).WithType(IdentifierName($"{endpoint}{modelClassName}Request"));
         }
 
@@ -255,7 +255,7 @@ namespace Inventura.Generator.Generators
                                                         IdentifierName($"{method}{modelClassName}Response")))))));
         }
 
-        public SyntaxList<MemberDeclarationSyntax> GenerateRequestOrDtoClassMemeberProperties(string endpoint, List<PropertiesWithInfo> propertiesWithInfo, string modelClassName = null)
+        public SyntaxList<MemberDeclarationSyntax> GenerateRequestOrDtoClassMemeberProperties(string endpoint, List<PropertiesWithInfo> propertiesWithInfo, string modelClassName = null, List<AttributesWithInfo> attributesWithInfo = null, ArgumentFilterConstantsHelpers argumentFilterConstantsHelpers = null)
         {
             var list = new List<MemberDeclarationSyntax>();
 
@@ -300,6 +300,31 @@ namespace Inventura.Generator.Generators
                             SyntaxKind.SetAccessorDeclaration)
                         .WithSemicolonToken(
                             Token(SyntaxKind.SemicolonToken))}))));
+
+
+            if (endpoint.Equals("ListPaged"))
+                attributesWithInfo.ForEach(x =>
+                    x.Arguments.Where(y => y.Any() && !y.Contains("INCLUDE")).ToList().ForEach(y => list.Add(
+                    PropertyDeclaration(
+                            IdentifierName(x.Type),
+                            Identifier($"{x.PropertyIdentifier}{argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))
+                        .WithModifiers(
+                            TokenList(
+                                Token(SyntaxKind.PublicKeyword)))
+                        .WithAccessorList(
+                            AccessorList(
+                                List<AccessorDeclarationSyntax>(
+                                    new AccessorDeclarationSyntax[]{
+                                    AccessorDeclaration(
+                                            SyntaxKind.GetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken)),
+                                    AccessorDeclaration(
+                                            SyntaxKind.SetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken))}))))
+                ));
+
             return List<MemberDeclarationSyntax>(list);
         }
 
@@ -327,5 +352,26 @@ namespace Inventura.Generator.Generators
             return initializerExpression;
         }
 
+        internal SeparatedSyntaxList<ArgumentSyntax> GenerateListPagedSpecificationRequest(List<AttributesWithInfo> attributesWithInfo, ArgumentFilterConstantsHelpers argumentFilterConstantsHelpers)
+        {
+            var arguments = new List<SyntaxNodeOrToken>();
+            attributesWithInfo.ForEach(x =>
+
+                    x.Arguments.Where(y => y.Any() && !y.Contains("INCLUDE")).ToList().ForEach(y =>
+                    {
+                        arguments.Add(
+                            Argument(
+                            MemberAccessExpression(
+                                                                SyntaxKind.SimpleMemberAccessExpression,
+                                                                IdentifierName("request"),
+                                                                IdentifierName($"{x.PropertyIdentifier.ToCamelCase()}{argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))));
+                        arguments.Add(
+                            Token(SyntaxKind.CommaToken));
+                    }
+            ));
+            // Remove last comma
+            arguments.RemoveAt(arguments.Count - 1);
+            return SeparatedList<ArgumentSyntax>(arguments);
+        }
     }
 }

@@ -33,7 +33,8 @@ namespace Inventura.Generator.Generators
                 _specificationsSyntaxGenerator.GenerateSpecificationsNode(_modelClassName,
                     _propertiesHelper.AttributesWithInfo);
             var endpointsNode = _endpointSyntaxGenerator.GenerateEndpointsNode(_modelClassName,
-                _propertiesHelper.PropertiesWithAttributes, _propertiesHelper.PropertiesWithInfos);
+                _propertiesHelper.PropertiesWithAttributes, _propertiesHelper.PropertiesWithInfos, 
+                _propertiesHelper.AttributesWithInfo);
 
             var code = new StringBuilder();
             code.AppendLine($"// ApplicationCore\\Interfaces\\I{_modelClassName}Service.cs");

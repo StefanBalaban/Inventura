@@ -23,7 +23,7 @@ namespace Inventura.ApplicationCore.Entities
         [Get(FilterConstants.INCLUDE)]
         public UnitOfMeasure UnitOfMeasure { get; set; }
 
-        [Get]
+        [Get(FilterConstants.EQUAL)]
         [Post]
         [Put]
         [Required]

@@ -16,13 +16,16 @@ namespace Inventura.Generator.Generators
         private List<PropertiesWithInfo> _propertiesWithInfo;
         private string _modelClassName;
         private List<KeyValuePair<string, string>> _propertiesWithAttributes;
+
+		private List<AttributesWithInfo> _attributesWithInfo;
         private string _serviceInstanceName;
         private string _serviceInterfaceName;
         private string _serviceParameterName;
 
         public SyntaxNode GenerateEndpointsNode(string modelClassName,
             List<KeyValuePair<string, string>> propertiesWithAttributes,
-            List<PropertiesWithInfo> propertiesWithInfo)
+            List<PropertiesWithInfo> propertiesWithInfo,
+			List<AttributesWithInfo> attributesWithInfo)
         {
             _modelClassName = modelClassName;
             _serviceInterfaceName = $"I{modelClassName}Service";
@@ -30,6 +33,7 @@ namespace Inventura.Generator.Generators
             _serviceParameterName = $"{modelClassName.ToCamelCase()}Service";
             _propertiesWithAttributes = propertiesWithAttributes;
             _propertiesWithInfo = propertiesWithInfo;
+			_attributesWithInfo = attributesWithInfo;
 
             return GenerateEndpointsNode();
         }
@@ -61,6 +65,7 @@ namespace Inventura.Generator.Generators
             list.AddRange(GenerateEndpoint("Update"));
             list.AddRange(GenerateEndpoint("GetById"));
             list.AddRange(GenerateEndpoint("Delete"));
+            list.AddRange(GenerateEndpoint("ListPaged"));
             list.AddRange(
                GenerateDto());
             return list;
@@ -191,7 +196,7 @@ namespace Inventura.Generator.Generators
                                         SingletonSeparatedList<BaseTypeSyntax>(
                                             SimpleBaseType(
                                                 IdentifierName("BaseRequest")))))
-                                .WithMembers(helper.GenerateRequestOrDtoClassMemeberProperties(endpoint, _propertiesWithInfo, _modelClassName)),
+                                .WithMembers(helper.GenerateRequestOrDtoClassMemeberProperties(endpoint, _propertiesWithInfo, _modelClassName, _attributesWithInfo, _argumentFilterConstantsHelpers)),
                 ClassDeclaration($"{endpoint}{_modelClassName}Response")
                 .WithModifiers(
                     TokenList(
@@ -351,6 +356,31 @@ namespace Inventura.Generator.Generators
 
             if (endpoint.Equals("Create") || endpoint.Equals("Update"))
                 statements.Add(ReturnStatement(IdentifierName("response")));
+
+
+			if (endpoint.Equals("ListPaged"))
+			{
+				statements.Add(LocalDeclarationStatement(
+                    VariableDeclaration(
+                        IdentifierName(
+                            Identifier(
+                                TriviaList(),
+                                SyntaxKind.VarKeyword,
+                                "var",
+                                "var",
+                                TriviaList())))
+                    .WithVariables(
+                        SingletonSeparatedList<VariableDeclaratorSyntax>(
+                            VariableDeclarator(
+                                Identifier("filterSpec"))
+                            .WithInitializer(
+                                EqualsValueClause(
+                                    ObjectCreationExpression(
+                                        IdentifierName($"{_modelClassName}FilterSpecification"))
+                                    .WithArgumentList(
+                                        ArgumentList(helper.GenerateListPagedSpecificationRequest(_attributesWithInfo, _argumentFilterConstantsHelpers)
+))))))));
+			}
 
             else
                 statements.Add(ReturnStatement(
