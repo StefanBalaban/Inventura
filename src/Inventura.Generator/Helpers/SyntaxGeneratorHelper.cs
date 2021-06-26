@@ -47,6 +47,7 @@ namespace Inventura.Generator.Generators
             code.AppendLine(specificationsNode.ToFullString());
             code.AppendLine("// Infrastructure\\Data\\Context.cs");
             code.AppendLine($"public DbSet<{_modelClassName}> {_modelClassName} {{ get; set; }}");
+            code.AppendLine($"// PublicApi\\Endpoints\\{_modelClassName}Endpoints\\Context.cs");
             code.AppendLine(endpointsNode.ToFullString());
 
             return code.ToString();

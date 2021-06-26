@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -10,6 +9,7 @@ namespace Inventura.Generator.Generators
 {
     internal class EndpointSyntaxGenerator
     {
+        private EndpointSyntaxGeneratorHelper helper = new EndpointSyntaxGeneratorHelper();
         private readonly ArgumentFilterConstantsHelpers _argumentFilterConstantsHelpers =
             new ArgumentFilterConstantsHelpers();
 
@@ -25,9 +25,9 @@ namespace Inventura.Generator.Generators
             List<PropertiesWithInfo> propertiesWithInfo)
         {
             _modelClassName = modelClassName;
-            _serviceInterfaceName = $"I{modelClassName}Repository";
-            _serviceInstanceName = $"_{modelClassName.ToCamelCase()}Repository";
-            _serviceParameterName = $"{modelClassName.ToCamelCase()}Repository";
+            _serviceInterfaceName = $"I{modelClassName}Service";
+            _serviceInstanceName = $"_{modelClassName.ToCamelCase()}Service";
+            _serviceParameterName = $"{modelClassName.ToCamelCase()}Service";
             _propertiesWithAttributes = propertiesWithAttributes;
             _propertiesWithInfo = propertiesWithInfo;
 
@@ -41,6 +41,31 @@ namespace Inventura.Generator.Generators
                     .WithMembers(SingletonList(GenerateMembers())).NormalizeWhitespace();
         }
 
+        private MemberDeclarationSyntax GenerateMembers()
+        {
+            return NamespaceDeclaration(
+               QualifiedName(
+                   QualifiedName(
+                       IdentifierName("PublicApi"),
+                       IdentifierName("Endpoints")),
+                   IdentifierName($"{_modelClassName}Endpoints"))).WithMembers(List(
+               GetMembers()
+           ));
+        }
+
+        private List<MemberDeclarationSyntax> GetMembers()
+        {
+            var list = new List<MemberDeclarationSyntax>();
+            list.AddRange(
+                GenerateEndpoint("Create"));
+            list.AddRange(GenerateEndpoint("Update"));
+            list.AddRange(GenerateEndpoint("GetById"));
+            list.AddRange(GenerateEndpoint("Delete"));
+            list.AddRange(
+               GenerateDto());
+            return list;
+        }
+
         private IEnumerable<MemberDeclarationSyntax> GenerateDto()
         {
             return new List<MemberDeclarationSyntax>
@@ -49,35 +74,14 @@ namespace Inventura.Generator.Generators
                                 .WithModifiers(
                                     TokenList(
                                         Token(SyntaxKind.PublicKeyword)))
-                                .WithMembers(GenerateClassMembers("Dto"))
+                                .WithMembers(helper.GenerateRequestOrDtoClassMemeberProperties("Dto", _propertiesWithInfo))
             };
         }
-
-        private IEnumerable<MemberDeclarationSyntax> GenerateUpdate()
-        {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<MemberDeclarationSyntax> GenerateListPaged()
-        {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<MemberDeclarationSyntax> GenerateGetById()
-        {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<MemberDeclarationSyntax> GenerateDelete()
-        {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<MemberDeclarationSyntax> GenerateCreate()
+        private IEnumerable<MemberDeclarationSyntax> GenerateEndpoint(string endpoint)
         {
             return new List<MemberDeclarationSyntax>
             {
-                ClassDeclaration("Create")
+                ClassDeclaration(endpoint)
                     .WithAttributeLists(
                         SingletonList(
                             AttributeList(
@@ -85,49 +89,12 @@ namespace Inventura.Generator.Generators
                                     Attribute(
                                             IdentifierName("Authorize"))
                                         .WithArgumentList(
-                                            AttributeArgumentList(
-                                                SeparatedList<AttributeArgumentSyntax>(
-                                                    new SyntaxNodeOrToken[]
-                                                    {
-                                                        AttributeArgument(
-                                                                LiteralExpression(
-                                                                    SyntaxKind.StringLiteralExpression,
-                                                                    Literal("Administrators")))
-                                                            .WithNameEquals(
-                                                                NameEquals(
-                                                                    IdentifierName("Roles"))),
-                                                        Token(SyntaxKind.CommaToken),
-                                                        AttributeArgument(
-                                                                MemberAccessExpression(
-                                                                    SyntaxKind.SimpleMemberAccessExpression,
-                                                                    IdentifierName("JwtBearerDefaults"),
-                                                                    IdentifierName("AuthenticationScheme")))
-                                                            .WithNameEquals(
-                                                                NameEquals(
-                                                                    IdentifierName("AuthenticationSchemes")))
-                                                    })))))))
+                                            AttributeArgumentList(helper.GenerateAttributes()))))))
                     .WithModifiers(
                         TokenList(
                             Token(SyntaxKind.PublicKeyword)))
                     .WithBaseList(
-                        BaseList(
-                            SingletonSeparatedList<BaseTypeSyntax>(
-                                SimpleBaseType(
-                                    QualifiedName(
-                                        QualifiedName(
-                                            IdentifierName("BaseAsyncEndpoint"),
-                                            GenericName(
-                                                    Identifier("WithRequest"))
-                                                .WithTypeArgumentList(
-                                                    TypeArgumentList(
-                                                        SingletonSeparatedList<TypeSyntax>(
-                                                            IdentifierName($"Create{_modelClassName}Request"))))),
-                                        GenericName(
-                                                Identifier("WithResponse"))
-                                            .WithTypeArgumentList(
-                                                TypeArgumentList(
-                                                    SingletonSeparatedList<TypeSyntax>(
-                                                        IdentifierName($"Create{_modelClassName}Response")))))))))
+                        BaseList(helper.GenerateBaseList(endpoint, _modelClassName)))
                     .WithMembers(
                         List(
                             new MemberDeclarationSyntax[]
@@ -151,7 +118,7 @@ namespace Inventura.Generator.Generators
                                     .WithModifiers(
                                         TokenList(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword))),
                                 ConstructorDeclaration(
-                                        Identifier("Create"))
+                                        Identifier(endpoint))
                                     .WithModifiers(
                                         TokenList(
                                             Token(SyntaxKind.PublicKeyword)))
@@ -194,80 +161,9 @@ namespace Inventura.Generator.Generators
                                                                 TypeArgumentList(
                                                                     SingletonSeparatedList<TypeSyntax>(
                                                                         IdentifierName(
-                                                                            $"{_modelClassName}ProductResponse"))))))),
+                                                                            $" {endpoint}{_modelClassName}Response"))))))),
                                         Identifier("HandleAsync"))
-                                    .WithAttributeLists(
-                                        List(
-                                            new[]
-                                            {
-                                                AttributeList(
-                                                    SingletonSeparatedList(
-                                                        Attribute(
-                                                                IdentifierName("HttpPost"))
-                                                            .WithArgumentList(
-                                                                AttributeArgumentList(
-                                                                    SingletonSeparatedList(
-                                                                        AttributeArgument(
-                                                                            LiteralExpression(
-                                                                                SyntaxKind.StringLiteralExpression,
-                                                                                Literal(
-                                                                                    $"api/{_modelClassName.ToLower()}")))))))),
-                                                AttributeList(
-                                                    SingletonSeparatedList(
-                                                        Attribute(
-                                                                IdentifierName("SwaggerOperation"))
-                                                            .WithArgumentList(
-                                                                AttributeArgumentList(
-                                                                    SeparatedList<AttributeArgumentSyntax>(
-                                                                        new SyntaxNodeOrToken[]
-                                                                        {
-                                                                            AttributeArgument(
-                                                                                    LiteralExpression(
-                                                                                        SyntaxKind
-                                                                                            .StringLiteralExpression,
-                                                                                        Literal(
-                                                                                            $"Creates a new {_modelClassName}")))
-                                                                                .WithNameEquals(
-                                                                                    NameEquals(
-                                                                                        IdentifierName("Summary"))),
-                                                                            Token(SyntaxKind.CommaToken),
-                                                                            AttributeArgument(
-                                                                                    LiteralExpression(
-                                                                                        SyntaxKind
-                                                                                            .StringLiteralExpression,
-                                                                                        Literal(
-                                                                                            $"Creates a new {_modelClassName}")))
-                                                                                .WithNameEquals(
-                                                                                    NameEquals(
-                                                                                        IdentifierName("Description"))),
-                                                                            Token(SyntaxKind.CommaToken),
-                                                                            AttributeArgument(
-                                                                                    LiteralExpression(
-                                                                                        SyntaxKind
-                                                                                            .StringLiteralExpression,
-                                                                                        Literal(
-                                                                                            $"{_modelClassName.ToLower()}.create")))
-                                                                                .WithNameEquals(
-                                                                                    NameEquals(
-                                                                                        IdentifierName("OperationId"))),
-                                                                            Token(SyntaxKind.CommaToken),
-                                                                            AttributeArgument(
-                                                                                    ImplicitArrayCreationExpression(
-                                                                                        InitializerExpression(
-                                                                                            SyntaxKind
-                                                                                                .ArrayInitializerExpression,
-                                                                                            SingletonSeparatedList<
-                                                                                                ExpressionSyntax>(
-                                                                                                LiteralExpression(
-                                                                                                    SyntaxKind
-                                                                                                        .StringLiteralExpression,
-                                                                                                    Literal(
-                                                                                                        $"{_modelClassName}Endpoints"))))))
-                                                                                .WithNameEquals(
-                                                                                    NameEquals(
-                                                                                        IdentifierName("Tags")))
-                                                                        })))))
-                                            }))
+                                    .WithAttributeLists(helper.GenerateSwagger(endpoint, _modelClassName))
                                     .WithModifiers(
                                         TokenList(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.OverrideKeyword),
                                             Token(SyntaxKind.AsyncKeyword)))
@@ -276,19 +172,43 @@ namespace Inventura.Generator.Generators
                                             SeparatedList<ParameterSyntax>(
                                                 new SyntaxNodeOrToken[]
                                                 {
-                                                    Parameter(
-                                                            Identifier("request"))
-                                                        .WithType(
-                                                            IdentifierName($"Create{_modelClassName}Request")),
+                                                    helper.GenerateHandleParameters(endpoint, _modelClassName),
                                                     Token(SyntaxKind.CommaToken),
                                                     Parameter(
                                                             Identifier("cancellationToken"))
                                                         .WithType(
                                                             IdentifierName("CancellationToken"))
                                                 })))
-                                    .WithBody(
-                                        Block(
-                                            LocalDeclarationStatement(
+                                    .WithBody(GenerateHandleBody(endpoint)
+                                        )
+                            })),
+                ClassDeclaration($"{endpoint}{_modelClassName}Request")
+                                .WithModifiers(
+                                    TokenList(
+                                        Token(SyntaxKind.PublicKeyword)))
+                                .WithBaseList(
+                                    BaseList(
+                                        SingletonSeparatedList<BaseTypeSyntax>(
+                                            SimpleBaseType(
+                                                IdentifierName("BaseRequest")))))
+                                .WithMembers(helper.GenerateRequestOrDtoClassMemeberProperties(endpoint, _propertiesWithInfo, _modelClassName)),
+                ClassDeclaration($"{endpoint}{_modelClassName}Response")
+                .WithModifiers(
+                    TokenList(
+                        Token(SyntaxKind.PublicKeyword)))
+                .WithBaseList(
+                    BaseList(
+                        SingletonSeparatedList<BaseTypeSyntax>(
+                            SimpleBaseType(
+                                IdentifierName("BaseResponse")))))
+                .WithMembers(helper.GenerateResponseClassMembers(endpoint))
+            };
+        }
+
+        private BlockSyntax GenerateHandleBody(string endpoint)
+        {
+            var statements = new List<StatementSyntax>() {
+                LocalDeclarationStatement(
                                                 VariableDeclaration(
                                                         IdentifierName(
                                                             Identifier(
@@ -305,7 +225,7 @@ namespace Inventura.Generator.Generators
                                                                     EqualsValueClause(
                                                                         ObjectCreationExpression(
                                                                                 IdentifierName(
-                                                                                    $"Create{_modelClassName}Response"))
+                                                                                    $"{endpoint}{_modelClassName}Response"))
                                                                             .WithArgumentList(
                                                                                 ArgumentList(
                                                                                     SingletonSeparatedList(
@@ -317,8 +237,21 @@ namespace Inventura.Generator.Generators
                                                                                                     IdentifierName(
                                                                                                         "request"),
                                                                                                     IdentifierName(
-                                                                                                        "CorrelationId")))))))))))),
-                                            LocalDeclarationStatement(
+                                                                                                        "CorrelationId"))))))))))))
+            };
+            statements.AddRange(GenerateHandleBodyMethodSpecificStatements(endpoint)
+            );
+            return Block(statements);
+        }
+
+        private List<StatementSyntax> GenerateHandleBodyMethodSpecificStatements(string endpoint)
+        {
+
+            var statements = new List<StatementSyntax>();
+
+            if (endpoint.Equals("Create") || endpoint.Equals("Update"))
+                statements.Add(
+                LocalDeclarationStatement(
                                                 VariableDeclaration(
                                                         IdentifierName(
                                                             Identifier(
@@ -330,7 +263,7 @@ namespace Inventura.Generator.Generators
                                                     .WithVariables(
                                                         SingletonSeparatedList(
                                                             VariableDeclarator(
-                                                                    Identifier($"new{_modelClassName}"))
+                                                                    Identifier($"{_modelClassName.ToCamelCase()}"))
                                                                 .WithInitializer(
                                                                     EqualsValueClause(
                                                                         AwaitExpression(
@@ -340,22 +273,60 @@ namespace Inventura.Generator.Generators
                                                                                             .SimpleMemberAccessExpression,
                                                                                         IdentifierName(
                                                                                             _serviceInstanceName),
-                                                                                        IdentifierName("PostAsync")))
+                                                                                        IdentifierName($"{helper.EndpointMethods[endpoint]}Async")))
                                                                                 .WithArgumentList(
                                                                                     ArgumentList(
                                                                                         SingletonSeparatedList(
                                                                                             Argument(
                                                                                                 ObjectCreationExpression(
                                                                                                         IdentifierName(
-                                                                                                            "FoodProduct"))
+                                                                                                            $"{_modelClassName}"))
                                                                                                     .WithInitializer(
                                                                                                         InitializerExpression(
                                                                                                             SyntaxKind
                                                                                                                 .ObjectInitializerExpression,
                                                                                                             SeparatedList(
-                                                                                                                GenerateCreateObjectInitialization()
-                                                                                                            ))))))))))))),
-                                            ExpressionStatement(
+                                                                                                                helper.GenerateServiceRequestObjectInitialization(endpoint, _propertiesWithAttributes)
+                                                                                                            )))))))))))))
+
+            );
+
+
+            if (endpoint.Equals("GetById") || endpoint.Equals("Delete"))
+                statements.Add(
+                    LocalDeclarationStatement(
+                VariableDeclaration(
+                    IdentifierName(
+                        Identifier(
+                            TriviaList(),
+                            SyntaxKind.VarKeyword,
+                            "var",
+                            "var",
+                            TriviaList())))
+                .WithVariables(
+                    SingletonSeparatedList<VariableDeclaratorSyntax>(
+                        VariableDeclarator(
+                            Identifier($"{_modelClassName.ToCamelCase()}"))
+                        .WithInitializer(
+                            EqualsValueClause(
+                                AwaitExpression(
+                                    InvocationExpression(
+                                        MemberAccessExpression(
+                                            SyntaxKind.SimpleMemberAccessExpression,
+                                            IdentifierName($"_{_modelClassName.ToCamelCase()}"),
+                                            IdentifierName($"{helper.EndpointMethods[endpoint]}Async")))
+                                    .WithArgumentList(
+                                        ArgumentList(
+                                            SingletonSeparatedList<ArgumentSyntax>(
+                                                Argument(
+                                                    MemberAccessExpression(
+                                                        SyntaxKind.SimpleMemberAccessExpression,
+                                                        IdentifierName("request"),
+                                                        IdentifierName($"{_modelClassName}Id"))))))))))))
+                );
+
+            if (endpoint.Equals("Create") || endpoint.Equals("Update") || endpoint.Equals("GetById"))
+                statements.Add(ExpressionStatement(
                                                 AssignmentExpression(
                                                     SyntaxKind.SimpleAssignmentExpression,
                                                     MemberAccessExpression(
@@ -376,100 +347,24 @@ namespace Inventura.Generator.Generators
                                                             ArgumentList(
                                                                 SingletonSeparatedList(
                                                                     Argument(
-                                                                        IdentifierName($"new{_modelClassName}"))))))),
-                                            ReturnStatement(
-                                                IdentifierName("response"))))
-                            })),
-                ClassDeclaration($"Create{_modelClassName}Request")
-                                .WithModifiers(
-                                    TokenList(
-                                        Token(SyntaxKind.PublicKeyword)))
-                                .WithBaseList(
-                                    BaseList(
-                                        SingletonSeparatedList<BaseTypeSyntax>(
-                                            SimpleBaseType(
-                                                IdentifierName("BaseRequest")))))
-                                .WithMembers(GenerateClassMembers("Post"))
-            };
-        }
+                                                                        IdentifierName($"{_modelClassName.ToCamelCase()}"))))))));
 
-        private SyntaxList<MemberDeclarationSyntax> GenerateClassMembers(string method)
-        {
-            var list = new List<MemberDeclarationSyntax>();
-            _propertiesWithInfo.Where(x => x.Method.Equals(method)).ToList().ForEach(x => list.Add(
-                PropertyDeclaration(
-                        IdentifierName(x.Type),
-                        Identifier(x.Identifier))
-                    .WithModifiers(
-                        TokenList(
-                            Token(SyntaxKind.PublicKeyword)))
-                    .WithAccessorList(
-                        AccessorList(
-                            List<AccessorDeclarationSyntax>(
-                                new AccessorDeclarationSyntax[]{
-                                    AccessorDeclaration(
-                                            SyntaxKind.GetAccessorDeclaration)
-                                        .WithSemicolonToken(
-                                            Token(SyntaxKind.SemicolonToken)),
-                                    AccessorDeclaration(
-                                            SyntaxKind.SetAccessorDeclaration)
-                                        .WithSemicolonToken(
-                                            Token(SyntaxKind.SemicolonToken))})))));
-            return List<MemberDeclarationSyntax>(list);
-        }
+            if (endpoint.Equals("Create") || endpoint.Equals("Update"))
+                statements.Add(ReturnStatement(IdentifierName("response")));
 
-        private IEnumerable<ExpressionSyntax> GenerateCreateObjectInitialization()
-        {
-            var properties = _propertiesWithAttributes.Where(x => x.Value == "Post").Select(x => x.Key).ToList();
-            var list = new List<SyntaxNodeOrToken>();
-            properties.ForEach(x =>
-                {
-                    list.Add(
-                        AssignmentExpression(
-                            SyntaxKind.SimpleAssignmentExpression,
-                            IdentifierName(x),
-                            MemberAccessExpression(
-                                SyntaxKind.SimpleMemberAccessExpression,
-                                IdentifierName("t"),
-                                IdentifierName(x))));
-                    list.Add(
-                        Token(SyntaxKind.CommaToken));
-                }
-            );
-            // Remove last comma
-            list.RemoveAt(list.Count - 1);
-            var initializerExpression = SeparatedList<ExpressionSyntax>(list);
-            return initializerExpression;
-        }
+            else
+                statements.Add(ReturnStatement(
+                InvocationExpression(
+                    IdentifierName("Ok"))
+                .WithArgumentList(
+                    ArgumentList(
+                        SingletonSeparatedList<ArgumentSyntax>(
+                            Argument(
+                                IdentifierName("response")))))));
 
-        private List<MemberDeclarationSyntax> GetMembers()
-        {
-            var list = new List<MemberDeclarationSyntax>();
-            list.AddRange(
-                GenerateCreate());
-            //list.AddRange(
-            //    GenerateDelete());
-            //list.AddRange(
-            //    GenerateGetById());
-            //list.AddRange(
-            //    GenerateListPaged());
-            //list.AddRange(
-            //    GenerateUpdate());
-            list.AddRange(
-               GenerateDto());
-            return list;
-        }
 
-        private MemberDeclarationSyntax GenerateMembers()
-        {
-            return NamespaceDeclaration(
-                QualifiedName(
-                    QualifiedName(
-                        IdentifierName("PublicApi"),
-                        IdentifierName("Endpoints")),
-                    IdentifierName($"{_modelClassName}Endpoints"))).WithMembers(List(
-                GetMembers()
-            ));
+
+            return statements;
         }
     }
 }

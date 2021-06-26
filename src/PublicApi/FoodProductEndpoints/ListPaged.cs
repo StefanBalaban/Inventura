@@ -6,11 +6,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Ardalis.GuardClauses;
 using Inventura.ApplicationCore.Interfaces;
 using Inventura.ApplicationCore.Specifications.FoodProduct;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Extensions;
 
 namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
@@ -33,7 +30,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             Summary = "List Food Products (paged)",
             Description = "List Food Products (paged)",
             OperationId = "food-product.ListPaged",
-            Tags = new[] {"FoodProductEndpoints"})
+            Tags = new[] { "FoodProductEndpoints" })
         ]
         public override async Task<ActionResult<ListPagedFoodProductResponse>> HandleAsync(
             [FromQuery] ListPagedFoodProductRequest request, CancellationToken cancellationToken)
@@ -58,7 +55,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             var foodProducts = await _foodProductService.GetAsync(filterSpec, pagedSpec);
 
             response.FoodProducts.AddRange(foodProducts.List.Select(_mapper.Map<FoodProductDto>));
-            response.PageCount = int.Parse(Math.Ceiling((decimal) foodProducts.Count / request.PageSize).ToString());
+            response.PageCount = int.Parse(Math.Ceiling((decimal)foodProducts.Count / request.PageSize).ToString());
 
             return Ok(response);
         }

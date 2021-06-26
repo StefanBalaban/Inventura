@@ -42,14 +42,12 @@ namespace Inventura.ApplicationCore.Entities
         [Put]
         public float Protein { get; set; }
 
-        [Get]
         [Post]
         [Put]
         public float Carbohydrates { get; set; }
 
         [Get]
         [Post]
-        [Put]
         public float Fats { get; set; }
 
         public FoodProduct()
