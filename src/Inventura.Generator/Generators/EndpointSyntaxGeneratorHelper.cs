@@ -18,11 +18,11 @@ namespace Inventura.Generator.Generators
             {"ListPaged", "Get"},
             {"Dto", "Dto"}
         };
-        public SyntaxList<MemberDeclarationSyntax> GenerateResponseClassMembers(string endpoint)
+        public SyntaxList<MemberDeclarationSyntax> GenerateResponseClassMembers(string endpoint, string modelClassName)
         {
             var members = new List<MemberDeclarationSyntax>() {
                             ConstructorDeclaration(
-                                Identifier($"{endpoint}FoodProductResponse"))
+                                Identifier($"{endpoint}{modelClassName}Response"))
                             .WithModifiers(
                                 TokenList(
                                     Token(SyntaxKind.PublicKeyword)))
@@ -43,7 +43,7 @@ namespace Inventura.Generator.Generators
                             .WithBody(
                                 Block()),
                             ConstructorDeclaration(
-                                Identifier($"{endpoint}FoodProductResponse"))
+                                Identifier($"{endpoint}{modelClassName}Response"))
                             .WithModifiers(
                                 TokenList(
                                     Token(SyntaxKind.PublicKeyword)))
@@ -55,8 +55,8 @@ namespace Inventura.Generator.Generators
             {
                 members.Add(
                         PropertyDeclaration(
-                            IdentifierName("FoodProductDto"),
-                            Identifier("FoodProduct"))
+                            IdentifierName($"{modelClassName}Dto"),
+                            Identifier($"{modelClassName}"))
                         .WithModifiers(
                             TokenList(
                                 Token(SyntaxKind.PublicKeyword)))
@@ -105,6 +105,64 @@ namespace Inventura.Generator.Generators
         .WithSemicolonToken(
             Token(SyntaxKind.SemicolonToken))
                 );
+
+            if (endpoint.Equals("ListPaged"))
+                members.AddRange(new MemberDeclarationSyntax[]{
+            PropertyDeclaration(
+                GenericName(
+                    Identifier("List"))
+                .WithTypeArgumentList(
+                    TypeArgumentList(
+                        SingletonSeparatedList<TypeSyntax>(
+                            IdentifierName($"{modelClassName}Dto")))),
+                Identifier($"{modelClassName}s"))
+            .WithModifiers(
+                TokenList(
+                    Token(SyntaxKind.PublicKeyword)))
+            .WithAccessorList(
+                AccessorList(
+                    List<AccessorDeclarationSyntax>(
+                        new AccessorDeclarationSyntax[]{
+                            AccessorDeclaration(
+                                SyntaxKind.GetAccessorDeclaration)
+                            .WithSemicolonToken(
+                                Token(SyntaxKind.SemicolonToken)),
+                            AccessorDeclaration(
+                                SyntaxKind.SetAccessorDeclaration)
+                            .WithSemicolonToken(
+                                Token(SyntaxKind.SemicolonToken))})))
+            .WithInitializer(
+                EqualsValueClause(
+                    ObjectCreationExpression(
+                        GenericName(
+                            Identifier("List"))
+                        .WithTypeArgumentList(
+                            TypeArgumentList(
+                                SingletonSeparatedList<TypeSyntax>(
+                                    IdentifierName($"{modelClassName}Dto")))))
+                    .WithArgumentList(
+                        ArgumentList())))
+            .WithSemicolonToken(
+                Token(SyntaxKind.SemicolonToken)),
+            PropertyDeclaration(
+                PredefinedType(
+                    Token(SyntaxKind.IntKeyword)),
+                Identifier("PageCount"))
+            .WithModifiers(
+                TokenList(
+                    Token(SyntaxKind.PublicKeyword)))
+            .WithAccessorList(
+                AccessorList(
+                    List<AccessorDeclarationSyntax>(
+                        new AccessorDeclarationSyntax[]{
+                            AccessorDeclaration(
+                                SyntaxKind.GetAccessorDeclaration)
+                            .WithSemicolonToken(
+                                Token(SyntaxKind.SemicolonToken)),
+                            AccessorDeclaration(
+                                SyntaxKind.SetAccessorDeclaration)
+                            .WithSemicolonToken(
+                                Token(SyntaxKind.SemicolonToken))})))});
             return List<MemberDeclarationSyntax>(members);
         }
 
@@ -352,9 +410,31 @@ namespace Inventura.Generator.Generators
             return initializerExpression;
         }
 
-        internal SeparatedSyntaxList<ArgumentSyntax> GenerateListPagedSpecificationRequest(List<AttributesWithInfo> attributesWithInfo, ArgumentFilterConstantsHelpers argumentFilterConstantsHelpers)
+        internal SeparatedSyntaxList<ArgumentSyntax> GenerateListPagedSpecificationRequest(List<AttributesWithInfo> attributesWithInfo, ArgumentFilterConstantsHelpers argumentFilterConstantsHelpers, bool pagedSpec = false)
         {
             var arguments = new List<SyntaxNodeOrToken>();
+            if (pagedSpec)
+            {
+                arguments.AddRange(new SyntaxNodeOrToken[]{
+                                                Argument(
+                                                    BinaryExpression(
+                                                        SyntaxKind.MultiplyExpression,
+                                                        MemberAccessExpression(
+                                                            SyntaxKind.SimpleMemberAccessExpression,
+                                                            IdentifierName("request"),
+                                                            IdentifierName("PageIndex")),
+                                                        MemberAccessExpression(
+                                                            SyntaxKind.SimpleMemberAccessExpression,
+                                                            IdentifierName("request"),
+                                                            IdentifierName("PageSize")))),
+                                                Token(SyntaxKind.CommaToken),
+                                                Argument(
+                                                    MemberAccessExpression(
+                                                        SyntaxKind.SimpleMemberAccessExpression,
+                                                        IdentifierName("request"),
+                                                        IdentifierName("PageSize"))),
+                                                Token(SyntaxKind.CommaToken)});
+            }
             attributesWithInfo.ForEach(x =>
 
                     x.Arguments.Where(y => y.Any() && !y.Contains("INCLUDE")).ToList().ForEach(y =>
@@ -364,7 +444,7 @@ namespace Inventura.Generator.Generators
                             MemberAccessExpression(
                                                                 SyntaxKind.SimpleMemberAccessExpression,
                                                                 IdentifierName("request"),
-                                                                IdentifierName($"{x.PropertyIdentifier.ToCamelCase()}{argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))));
+                                                                IdentifierName($"{x.PropertyIdentifier}{argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))));
                         arguments.Add(
                             Token(SyntaxKind.CommaToken));
                     }

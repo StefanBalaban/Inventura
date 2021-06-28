@@ -206,7 +206,7 @@ namespace Inventura.Generator.Generators
                         SingletonSeparatedList<BaseTypeSyntax>(
                             SimpleBaseType(
                                 IdentifierName("BaseResponse")))))
-                .WithMembers(helper.GenerateResponseClassMembers(endpoint))
+                .WithMembers(helper.GenerateResponseClassMembers(endpoint, _modelClassName))
             };
         }
 
@@ -354,8 +354,6 @@ namespace Inventura.Generator.Generators
                                                                     Argument(
                                                                         IdentifierName($"{_modelClassName.ToCamelCase()}"))))))));
 
-            if (endpoint.Equals("Create") || endpoint.Equals("Update"))
-                statements.Add(ReturnStatement(IdentifierName("response")));
 
 
 			if (endpoint.Equals("ListPaged"))
@@ -379,8 +377,129 @@ namespace Inventura.Generator.Generators
                                         IdentifierName($"{_modelClassName}FilterSpecification"))
                                     .WithArgumentList(
                                         ArgumentList(helper.GenerateListPagedSpecificationRequest(_attributesWithInfo, _argumentFilterConstantsHelpers)
-))))))));
+                ))))))));
+                statements.Add(LocalDeclarationStatement(
+                    VariableDeclaration(
+                        IdentifierName(
+                            Identifier(
+                                TriviaList(),
+                                SyntaxKind.VarKeyword,
+                                "var",
+                                "var",
+                                TriviaList())))
+                    .WithVariables(
+                        SingletonSeparatedList<VariableDeclaratorSyntax>(
+                            VariableDeclarator(
+                                Identifier("pagedSpec"))
+                            .WithInitializer(
+                                EqualsValueClause(
+                                    ObjectCreationExpression(
+                                        IdentifierName($"{_modelClassName}FilterPaginatedSpecification"))
+                                    .WithArgumentList(
+                                        ArgumentList(helper.GenerateListPagedSpecificationRequest(_attributesWithInfo, _argumentFilterConstantsHelpers, true)
+                ))))))));
+                statements.Add(LocalDeclarationStatement(
+                    VariableDeclaration(
+                        IdentifierName(
+                            Identifier(
+                                TriviaList(),
+                                SyntaxKind.VarKeyword,
+                                "var",
+                                "var",
+                                TriviaList())))
+                    .WithVariables(
+                        SingletonSeparatedList<VariableDeclaratorSyntax>(
+                            VariableDeclarator(
+                                Identifier($"{_modelClassName}s"))
+                            .WithInitializer(
+                                EqualsValueClause(
+                                    AwaitExpression(
+                                        InvocationExpression(
+                                            MemberAccessExpression(
+                                                SyntaxKind.SimpleMemberAccessExpression,
+                                                IdentifierName(_serviceInstanceName),
+                                                IdentifierName("GetAsync")))
+                                        .WithArgumentList(
+                                            ArgumentList(
+                                                SeparatedList<ArgumentSyntax>(
+                                                    new SyntaxNodeOrToken[]{
+                                                        Argument(
+                                                            IdentifierName("filterSpec")),
+                                                        Token(SyntaxKind.CommaToken),
+                                                        Argument(
+                                                            IdentifierName("pagedSpec"))}))))))))));
+                statements.Add(ExpressionStatement(
+                    InvocationExpression(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            MemberAccessExpression(
+                                SyntaxKind.SimpleMemberAccessExpression,
+                                IdentifierName("response"),
+                                IdentifierName($"{_modelClassName}s")),
+                            IdentifierName("AddRange")))
+                    .WithArgumentList(
+                        ArgumentList(
+                            SingletonSeparatedList<ArgumentSyntax>(
+                                Argument(
+                                    InvocationExpression(
+                                        MemberAccessExpression(
+                                            SyntaxKind.SimpleMemberAccessExpression,
+                                            MemberAccessExpression(
+                                                SyntaxKind.SimpleMemberAccessExpression,
+                                                IdentifierName($"{_modelClassName.ToCamelCase()}s"),
+                                                IdentifierName("List")),
+                                            IdentifierName("Select")))
+                                    .WithArgumentList(
+                                        ArgumentList(
+                                            SingletonSeparatedList<ArgumentSyntax>(
+                                                Argument(
+                                                    MemberAccessExpression(
+                                                        SyntaxKind.SimpleMemberAccessExpression,
+                                                        IdentifierName("_mapper"),
+                                                        GenericName(
+                                                            Identifier("Map"))
+                                                        .WithTypeArgumentList(
+                                                            TypeArgumentList(
+                                                                SingletonSeparatedList<TypeSyntax>(
+                                                                    IdentifierName($"{_modelClassName}Dto")))))))))))))));
+                    statements.Add(ExpressionStatement(
+                    InvocationExpression(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            MemberAccessExpression(
+                                SyntaxKind.SimpleMemberAccessExpression,
+                                IdentifierName("response"),
+                                IdentifierName($"{_modelClassName}s")),
+                            IdentifierName("AddRange")))
+                    .WithArgumentList(
+                        ArgumentList(
+                            SingletonSeparatedList<ArgumentSyntax>(
+                                Argument(
+                                    InvocationExpression(
+                                        MemberAccessExpression(
+                                            SyntaxKind.SimpleMemberAccessExpression,
+                                            MemberAccessExpression(
+                                                SyntaxKind.SimpleMemberAccessExpression,
+                                                IdentifierName($"{_modelClassName.ToCamelCase()}s"),
+                                                IdentifierName("List")),
+                                            IdentifierName("Select")))
+                                    .WithArgumentList(
+                                        ArgumentList(
+                                            SingletonSeparatedList<ArgumentSyntax>(
+                                                Argument(
+                                                    MemberAccessExpression(
+                                                        SyntaxKind.SimpleMemberAccessExpression,
+                                                        IdentifierName("_mapper"),
+                                                        GenericName(
+                                                            Identifier("Map"))
+                                                        .WithTypeArgumentList(
+                                                            TypeArgumentList(
+                                                                SingletonSeparatedList<TypeSyntax>(
+                                                                    IdentifierName($"{_modelClassName}Dto")))))))))))))));
 			}
+
+            if (endpoint.Equals("Create") || endpoint.Equals("Update"))
+                statements.Add(ReturnStatement(IdentifierName("response")));
 
             else
                 statements.Add(ReturnStatement(

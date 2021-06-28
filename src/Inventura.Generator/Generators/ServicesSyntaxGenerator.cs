@@ -378,13 +378,13 @@ namespace Inventura.Generator.Generators
                         InvocationExpression(
                                 MemberAccessExpression(
                                     SyntaxKind.SimpleMemberAccessExpression,
-                                    IdentifierName("_foodProductRepository"),
+                                    IdentifierName($"{_repositoryFieldName}"),
                                     IdentifierName("UpdateAsync")))
                             .WithArgumentList(
                                 ArgumentList(
                                     SingletonSeparatedList(
                                         Argument(
-                                            IdentifierName("foodProduct")))))))
+                                            IdentifierName($"{_modelClassName}")))))))
             );
             listOfStatements.Add(
                 ReturnStatement(
