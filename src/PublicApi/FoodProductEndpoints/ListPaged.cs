@@ -1,13 +1,13 @@
 ﻿using Ardalis.ApiEndpoints;
 using AutoMapper;
+using Inventura.ApplicationCore.Interfaces;
+using Inventura.ApplicationCore.Specifications.FoodProduct;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.ApplicationCore.Specifications.FoodProduct;
 
 namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {

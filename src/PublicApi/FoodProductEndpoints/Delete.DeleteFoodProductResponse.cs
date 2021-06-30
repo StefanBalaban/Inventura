@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Inventura.PublicApi.Util.CatalogItemEndpoints
+namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
     public class DeleteFoodProductResponse : BaseResponse
     {

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ardalis.Specification;
+﻿using Ardalis.Specification;
 using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Specifications.FoodProduct;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Inventura.ApplicationCore.Interfaces
 {

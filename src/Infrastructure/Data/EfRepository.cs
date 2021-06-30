@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.Specification;
+﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Inventura.ApplicationCore.Entities;
 using Inventura.ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Inventura.Infrastructure.Data
 {
@@ -26,7 +26,7 @@ namespace Inventura.Infrastructure.Data
 
         public virtual async Task<T> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var keyValues = new object[] {id};
+            var keyValues = new object[] { id };
             return await _dbContext.Set<T>().FindAsync(keyValues, cancellationToken);
         }
 

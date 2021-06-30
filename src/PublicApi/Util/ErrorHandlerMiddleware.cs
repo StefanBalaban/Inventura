@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Inventura.ApplicationCore.Exceptions;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Inventura.ApplicationCore.Exceptions;
 
 namespace Inventura.PublicApi.Util
 {

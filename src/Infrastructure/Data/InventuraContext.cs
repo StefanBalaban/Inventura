@@ -1,9 +1,9 @@
-﻿using System.Reflection;
-using Inventura.ApplicationCore.Entities;
+﻿using Inventura.ApplicationCore.Entities;
 using Inventura.ApplicationCore.Entities.DietPlanAggregate;
 using Inventura.ApplicationCore.Entities.MealAggregate;
 using Inventura.ApplicationCore.Entities.UserAggregate;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Inventura.Infrastructure.Data
 {
@@ -24,12 +24,12 @@ namespace Inventura.Infrastructure.Data
         public DbSet<DietPlan> DietPlans { get; set; }
         public DbSet<DietPlanPeriod> DietPlanPeriods { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                "Data Source=.;Integrated Security=true;Initial Catalog=Inventura.InventuraDb;");
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(
+        //        "Data Source=.;Integrated Security=true;Initial Catalog=Inventura.InventuraDb;");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

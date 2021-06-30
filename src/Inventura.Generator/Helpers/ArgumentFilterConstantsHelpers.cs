@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Inventura.ApplicationCore.Constants;
+﻿using Inventura.ApplicationCore.Constants;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Collections.Generic;
 
 namespace Inventura.Generator.Generators
 {

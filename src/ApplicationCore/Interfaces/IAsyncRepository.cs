@@ -1,8 +1,8 @@
 ﻿using Ardalis.Specification;
+using Inventura.ApplicationCore.Entities;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Inventura.ApplicationCore.Entities;
 
 namespace Inventura.ApplicationCore.Interfaces
 {

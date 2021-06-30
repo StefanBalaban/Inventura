@@ -11,11 +11,11 @@ namespace Inventura.Infrastructure.Identity
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                "Data Source=.;Integrated Security=true;Initial Catalog=Inventura.AppIdentity;");
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(
+        //        "Data Source=.;Integrated Security=true;Initial Catalog=Inventura.AppIdentity;");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
     }
 }

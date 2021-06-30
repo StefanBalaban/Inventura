@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using Inventura.ApplicationCore.Entities;
 
 namespace Inventura.ApplicationCore.Specifications.FoodProduct
 {

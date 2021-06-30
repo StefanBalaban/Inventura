@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Inventura.ApplicationCore.Entities.UserAggregate;
 using Inventura.ApplicationCore.Exceptions;
 using Inventura.ApplicationCore.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Inventura.ApplicationCore.Extensions
 {

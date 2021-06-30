@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Ardalis.Specification;
 using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Interfaces;
 using Inventura.ApplicationCore.Extensions;
+using Inventura.ApplicationCore.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Inventura.ApplicationCore.Services
 {

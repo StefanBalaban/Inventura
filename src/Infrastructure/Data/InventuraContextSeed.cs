@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using Bogus;
+using Bogus.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Inventura.Infrastructure.Data
 {
@@ -8,46 +12,39 @@ namespace Inventura.Infrastructure.Data
         public static async Task SeedAsync(InventuraContext catalogContext,
             ILoggerFactory loggerFactory, int? retry = 0)
         {
-            //int retryForAvailability = retry.Value;
-            //try
-            //{
-            //    // TODO: Only run this if using a real database
-            //    // catalogContext.Database.Migrate();
-            //    if (!await catalogContext.CatalogBrands.AnyAsync())
-            //    {
-            //        await catalogContext.CatalogBrands.AddRangeAsync(
-            //            GetPreconfiguredCatalogBrands());
+            int retryForAvailability = retry.Value;
+            try
+            {
+                // TODO: Only run this if using a real database
+                // catalogContext.Database.Migrate();
+                if (!await catalogContext.UnitOfMeasures.AnyAsync())
+                {
+                    await catalogContext.UnitOfMeasures.AddRangeAsync(
+                        new ApplicationCore.Entities.UnitOfMeasure(1));
 
-            //        await catalogContext.SaveChangesAsync();
-            //    }
+                    await catalogContext.SaveChangesAsync();
+                }
+                if (!await catalogContext.FoodProducts.AnyAsync())
+                {
+                    var ids = 1;
+                    await catalogContext.FoodProducts.AddRangeAsync(
+                        new Faker<ApplicationCore.Entities.FoodProduct>().RuleFor(m => m.Id, f => ids++).RuleFor(m => m.UnitOfMeasureId, f => 1).GenerateBetween(12, 12));
 
-            //    if (!await catalogContext.CatalogTypes.AnyAsync())
-            //    {
-            //        await catalogContext.CatalogTypes.AddRangeAsync(
-            //            GetPreconfiguredCatalogTypes());
+                    await catalogContext.SaveChangesAsync();
+                }
 
-            //        await catalogContext.SaveChangesAsync();
-            //    }
-
-            //    if (!await catalogContext.CatalogItems.AnyAsync())
-            //    {
-            //        await catalogContext.CatalogItems.AddRangeAsync(
-            //            GetPreconfiguredItems());
-
-            //        await catalogContext.SaveChangesAsync();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    if (retryForAvailability < 10)
-            //    {
-            //        retryForAvailability++;
-            //        var log = loggerFactory.CreateLogger<CatalogContextSeed>();
-            //        log.LogError(ex.Message);
-            //        await SeedAsync(catalogContext, loggerFactory, retryForAvailability);
-            //    }
-            //    throw;
-            //}
+            }
+            catch (Exception ex)
+            {
+                if (retryForAvailability < 10)
+                {
+                    retryForAvailability++;
+                    var log = loggerFactory.CreateLogger<InventuraContextSeed>();
+                    log.LogError(ex.Message);
+                    await SeedAsync(catalogContext, loggerFactory, retryForAvailability);
+                }
+                throw;
+            }
         }
     }
 }

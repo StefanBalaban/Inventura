@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29102.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{419A6ACE-0419-4315-A6FB-B0E63D39432E}"
 EndProject
@@ -9,9 +9,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventura.ApplicationCore", "src\ApplicationCore\Inventura.ApplicationCore.csproj", "{7FED7440-2311-4D1E-958B-3E887C585CD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{15EA4737-125B-4E6E-A806-E13B7EBCDCCF}"
-	ProjectSection(SolutionItems) = preProject
-		CodeCoverage.runsettings = CodeCoverage.runsettings
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0BD72BEA-EF42-4B72-8B69-12A39EC76FBA}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,6 +23,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventura.PublicApi", "src\PublicApi\Inventura.PublicApi.csproj", "{B5E4F33C-4667-4A55-AF6A-740F84C4CF3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventura.Generator", "src\Inventura.Generator\Inventura.Generator.csproj", "{20EE60B3-3EE1-4303-B1E5-1C45F59981B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "tests\FunctionalTests\FunctionalTests.csproj", "{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +92,18 @@ Global
 		{20EE60B3-3EE1-4303-B1E5-1C45F59981B7}.Release|x64.Build.0 = Release|Any CPU
 		{20EE60B3-3EE1-4303-B1E5-1C45F59981B7}.Release|x86.ActiveCfg = Release|Any CPU
 		{20EE60B3-3EE1-4303-B1E5-1C45F59981B7}.Release|x86.Build.0 = Release|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Debug|x64.Build.0 = Debug|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Debug|x86.Build.0 = Debug|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Release|x64.ActiveCfg = Release|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Release|x64.Build.0 = Release|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Release|x86.ActiveCfg = Release|Any CPU
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +113,7 @@ Global
 		{7FED7440-2311-4D1E-958B-3E887C585CD2} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
 		{B5E4F33C-4667-4A55-AF6A-740F84C4CF3A} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
 		{20EE60B3-3EE1-4303-B1E5-1C45F59981B7} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
+		{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57} = {15EA4737-125B-4E6E-A806-E13B7EBCDCCF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49813262-5DA3-4D61-ABD3-493C74CE8C2B}

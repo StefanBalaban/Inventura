@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Inventura.ApplicationCore.Constants;
+using Inventura.ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -6,8 +8,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Inventura.ApplicationCore.Constants;
-using Inventura.ApplicationCore.Interfaces;
 
 namespace Inventura.Infrastructure.Identity
 {
@@ -26,7 +26,7 @@ namespace Inventura.Infrastructure.Identity
             var key = Encoding.ASCII.GetBytes(AuthorizationConstants.JWT_SECRET_KEY);
             var user = await _userManager.FindByNameAsync(userName);
             var roles = await _userManager.GetRolesAsync(user);
-            var claims = new List<Claim> {new Claim(ClaimTypes.Name, userName)};
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, userName) };
 
             foreach (var role in roles) claims.Add(new Claim(ClaimTypes.Role, role));
 

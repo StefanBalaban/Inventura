@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Inventura.Generator.Generators
@@ -17,7 +16,7 @@ namespace Inventura.Generator.Generators
         private string _modelClassName;
         private List<KeyValuePair<string, string>> _propertiesWithAttributes;
 
-		private List<AttributesWithInfo> _attributesWithInfo;
+        private List<AttributesWithInfo> _attributesWithInfo;
         private string _serviceInstanceName;
         private string _serviceInterfaceName;
         private string _serviceParameterName;
@@ -25,7 +24,7 @@ namespace Inventura.Generator.Generators
         public SyntaxNode GenerateEndpointsNode(string modelClassName,
             List<KeyValuePair<string, string>> propertiesWithAttributes,
             List<PropertiesWithInfo> propertiesWithInfo,
-			List<AttributesWithInfo> attributesWithInfo)
+            List<AttributesWithInfo> attributesWithInfo)
         {
             _modelClassName = modelClassName;
             _serviceInterfaceName = $"I{modelClassName}Service";
@@ -33,13 +32,13 @@ namespace Inventura.Generator.Generators
             _serviceParameterName = $"{modelClassName.ToCamelCase()}Service";
             _propertiesWithAttributes = propertiesWithAttributes;
             _propertiesWithInfo = propertiesWithInfo;
-			_attributesWithInfo = attributesWithInfo;
+            _attributesWithInfo = attributesWithInfo;
 
             return GenerateEndpointsNode();
         }
 
         private SyntaxNode GenerateEndpointsNode()
-        {
+        {            
             return
                 CompilationUnit()
                     .WithMembers(SingletonList(GenerateMembers())).NormalizeWhitespace();
@@ -356,9 +355,9 @@ namespace Inventura.Generator.Generators
 
 
 
-			if (endpoint.Equals("ListPaged"))
-			{
-				statements.Add(LocalDeclarationStatement(
+            if (endpoint.Equals("ListPaged"))
+            {
+                statements.Add(LocalDeclarationStatement(
                     VariableDeclaration(
                         IdentifierName(
                             Identifier(
@@ -462,41 +461,41 @@ namespace Inventura.Generator.Generators
                                                             TypeArgumentList(
                                                                 SingletonSeparatedList<TypeSyntax>(
                                                                     IdentifierName($"{_modelClassName}Dto")))))))))))))));
-                    statements.Add(ExpressionStatement(
-                    InvocationExpression(
+                statements.Add(ExpressionStatement(
+                InvocationExpression(
+                    MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
                         MemberAccessExpression(
                             SyntaxKind.SimpleMemberAccessExpression,
-                            MemberAccessExpression(
-                                SyntaxKind.SimpleMemberAccessExpression,
-                                IdentifierName("response"),
-                                IdentifierName($"{_modelClassName}s")),
-                            IdentifierName("AddRange")))
-                    .WithArgumentList(
-                        ArgumentList(
-                            SingletonSeparatedList<ArgumentSyntax>(
-                                Argument(
-                                    InvocationExpression(
+                            IdentifierName("response"),
+                            IdentifierName($"{_modelClassName}s")),
+                        IdentifierName("AddRange")))
+                .WithArgumentList(
+                    ArgumentList(
+                        SingletonSeparatedList<ArgumentSyntax>(
+                            Argument(
+                                InvocationExpression(
+                                    MemberAccessExpression(
+                                        SyntaxKind.SimpleMemberAccessExpression,
                                         MemberAccessExpression(
                                             SyntaxKind.SimpleMemberAccessExpression,
-                                            MemberAccessExpression(
-                                                SyntaxKind.SimpleMemberAccessExpression,
-                                                IdentifierName($"{_modelClassName.ToCamelCase()}s"),
-                                                IdentifierName("List")),
-                                            IdentifierName("Select")))
-                                    .WithArgumentList(
-                                        ArgumentList(
-                                            SingletonSeparatedList<ArgumentSyntax>(
-                                                Argument(
-                                                    MemberAccessExpression(
-                                                        SyntaxKind.SimpleMemberAccessExpression,
-                                                        IdentifierName("_mapper"),
-                                                        GenericName(
-                                                            Identifier("Map"))
-                                                        .WithTypeArgumentList(
-                                                            TypeArgumentList(
-                                                                SingletonSeparatedList<TypeSyntax>(
-                                                                    IdentifierName($"{_modelClassName}Dto")))))))))))))));
-			}
+                                            IdentifierName($"{_modelClassName.ToCamelCase()}s"),
+                                            IdentifierName("List")),
+                                        IdentifierName("Select")))
+                                .WithArgumentList(
+                                    ArgumentList(
+                                        SingletonSeparatedList<ArgumentSyntax>(
+                                            Argument(
+                                                MemberAccessExpression(
+                                                    SyntaxKind.SimpleMemberAccessExpression,
+                                                    IdentifierName("_mapper"),
+                                                    GenericName(
+                                                        Identifier("Map"))
+                                                    .WithTypeArgumentList(
+                                                        TypeArgumentList(
+                                                            SingletonSeparatedList<TypeSyntax>(
+                                                                IdentifierName($"{_modelClassName}Dto")))))))))))))));
+            }
 
             if (endpoint.Equals("Create") || endpoint.Equals("Update"))
                 statements.Add(ReturnStatement(IdentifierName("response")));

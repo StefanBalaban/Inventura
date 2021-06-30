@@ -7,7 +7,7 @@ namespace Inventura.PublicApi.Util
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
-            var excludeProperties = new[] {"CorrelationId"};
+            var excludeProperties = new[] { "CorrelationId" };
 
             foreach (var prop in excludeProperties)
                 if (schema.Properties.ContainsKey(prop))

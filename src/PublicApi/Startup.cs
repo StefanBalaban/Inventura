@@ -1,4 +1,11 @@
 using AutoMapper;
+using Inventura.ApplicationCore.Constants;
+using Inventura.ApplicationCore.Entities;
+using Inventura.ApplicationCore.Interfaces;
+using Inventura.ApplicationCore.Services;
+using Inventura.Infrastructure.Data;
+using Inventura.Infrastructure.Identity;
+using Inventura.Infrastructure.Logging;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -12,13 +19,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Text;
-using Inventura.ApplicationCore.Constants;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.ApplicationCore.Services;
-using Inventura.Infrastructure.Data;
-using Inventura.Infrastructure.Identity;
-using Inventura.Infrastructure.Logging;
 
 namespace Inventura.PublicApi.Util
 {
@@ -136,7 +136,7 @@ namespace Inventura.PublicApi.Util
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
                 c.EnableAnnotations();
                 c.SchemaFilter<CustomSchemaFilters>();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

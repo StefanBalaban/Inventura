@@ -1,7 +1,7 @@
-﻿using System;
-using Inventura.PublicApi.Util.FoodProductEndpoints;
+﻿using Inventura.PublicApi.Util.FoodProductEndpoints;
+using System;
 
-namespace Inventura.PublicApi.Util.CatalogItemEndpoints
+namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
     public class CreateFoodProductResponse : BaseResponse
     {

@@ -1,12 +1,10 @@
 ﻿using Ardalis.ApiEndpoints;
+using AutoMapper;
+using Inventura.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.ApplicationCore.Entities;
-using Inventura.PublicApi.Util.CatalogItemEndpoints;
 
 namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
@@ -28,7 +26,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             Summary = "Get a Food Product by Id",
             Description = "Gets a Food Product by Id",
             OperationId = "catalog-items.GetById",
-            Tags = new[] {"FoodProductEndpoints"})
+            Tags = new[] { "FoodProductEndpoints" })
         ]
         public override async Task<ActionResult<GetByIdFoodProductResponse>> HandleAsync(
             [FromRoute] GetByIdFoodProductRequest request, CancellationToken cancellationToken)

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Specifications.FoodProduct;
+﻿using Inventura.ApplicationCore.Entities;
 
 namespace Inventura.ApplicationCore.Interfaces
 {

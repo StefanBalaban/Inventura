@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
+using System.Linq;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Inventura.Generator.Generators
@@ -145,8 +145,8 @@ namespace Inventura.Generator.Generators
                                     Argument(
                                         IdentifierName("take")))))));
 
-            _attributes.ForEach(x => 
-                x.Arguments.Where(y => y.Contains("INCLUDE")).ToList().ForEach(z => 
+            _attributes.ForEach(x =>
+                x.Arguments.Where(y => y.Contains("INCLUDE")).ToList().ForEach(z =>
                     statementSyntaxList.Add(ExpressionStatement(
                         InvocationExpression(
                                 MemberAccessExpression(
@@ -167,7 +167,7 @@ namespace Inventura.Generator.Generators
                                                         IdentifierName(x.PropertyIdentifier)))))))))
                     )
                 );
-            
+
             return statementSyntaxList;
         }
 

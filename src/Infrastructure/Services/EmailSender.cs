@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Inventura.ApplicationCore.Interfaces;
+﻿using Inventura.ApplicationCore.Interfaces;
+using System.Threading.Tasks;
 
 namespace Inventura.Infrastructure.Services
 {

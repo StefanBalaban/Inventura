@@ -1,13 +1,11 @@
 ﻿using Ardalis.ApiEndpoints;
+using Inventura.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.PublicApi.Util.CatalogItemEndpoints;
-using Inventura.ApplicationCore.Entities;
 
 namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
@@ -28,7 +26,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             Summary = "Deletes a Food Product",
             Description = "Deletes a Food Product",
             OperationId = "food-product.Delete",
-            Tags = new[] {"FoodProductEndpoints"})
+            Tags = new[] { "FoodProductEndpoints" })
         ]
         public override async Task<ActionResult<DeleteFoodProductResponse>> HandleAsync(
             [FromRoute] DeleteFoodProductRequest request, CancellationToken cancellationToken)

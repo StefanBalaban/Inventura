@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
-using System.ComponentModel.DataAnnotations;
+﻿using Ardalis.GuardClauses;
 using Inventura.ApplicationCore.Constants;
 using Inventura.ApplicationCore.Filters;
 using Inventura.ApplicationCore.Interfaces;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Inventura.ApplicationCore.Entities
 {
@@ -27,7 +23,8 @@ namespace Inventura.ApplicationCore.Entities
         [Post]
         [Put]
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Dto]
+        [Range(1, int.MaxValue)]
         public int UnitOfMeasureId { get; set; }
 
         [Dto]
@@ -44,10 +41,12 @@ namespace Inventura.ApplicationCore.Entities
 
         [Post]
         [Put]
+        [Dto]
         public float Carbohydrates { get; set; }
 
         [Get]
         [Post]
+        [Dto]
         public float Fats { get; set; }
 
         public FoodProduct()

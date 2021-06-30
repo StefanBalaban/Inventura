@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using Inventura.ApplicationCore.Extensions;
+using Inventura.ApplicationCore.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.ApplicationCore.Extensions;
 
 namespace Inventura.ApplicationCore.Entities.UserAggregate
 {

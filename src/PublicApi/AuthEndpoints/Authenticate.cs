@@ -1,11 +1,11 @@
 ﻿using Ardalis.ApiEndpoints;
+using Inventura.ApplicationCore.Interfaces;
+using Inventura.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.Infrastructure.Identity;
 
 namespace Inventura.PublicApi.Util.AuthEndpoints
 {
@@ -28,7 +28,7 @@ namespace Inventura.PublicApi.Util.AuthEndpoints
             Summary = "Authenticates a user",
             Description = "Authenticates a user",
             OperationId = "auth.authenticate",
-            Tags = new[] {"AuthEndpoints"})
+            Tags = new[] { "AuthEndpoints" })
         ]
         public override async Task<ActionResult<AuthenticateResponse>> HandleAsync(AuthenticateRequest request,
             CancellationToken cancellationToken)

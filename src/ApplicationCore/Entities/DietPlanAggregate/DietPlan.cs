@@ -1,11 +1,7 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using Inventura.ApplicationCore.Entities.MealAggregate;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Entities.MealAggregate;
-using Inventura.ApplicationCore.Interfaces;
 
 namespace Inventura.ApplicationCore.Entities.DietPlanAggregate
 {

@@ -1,14 +1,13 @@
 ﻿using Ardalis.ApiEndpoints;
+using AutoMapper;
+using Inventura.ApplicationCore.Entities;
+using Inventura.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Interfaces;
 
 namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
@@ -30,7 +29,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             Summary = "Updates a Food Product",
             Description = "Updates a Food Product",
             OperationId = "food-product.update",
-            Tags = new[] {"FoodProductEndpoints"})
+            Tags = new[] { "FoodProductEndpoints" })
         ]
         public override async Task<ActionResult<UpdateFoodProductResponse>> HandleAsync(
             UpdateFoodProductRequest request, CancellationToken cancellationToken)

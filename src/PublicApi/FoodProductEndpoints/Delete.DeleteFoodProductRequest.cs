@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+﻿namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
     public class DeleteFoodProductRequest : BaseRequest
     {

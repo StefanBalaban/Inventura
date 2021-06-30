@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+﻿namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
     public class UpdateFoodProductRequest : BaseRequest
     {

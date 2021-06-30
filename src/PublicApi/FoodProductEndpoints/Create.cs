@@ -1,15 +1,13 @@
 ﻿using Ardalis.ApiEndpoints;
+using AutoMapper;
+using Inventura.ApplicationCore.Entities;
+using Inventura.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.PublicApi.Util.CatalogItemEndpoints;
 
 namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
@@ -32,7 +30,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             Summary = "Creates a new Food Product",
             Description = "Creates a new Food Product",
             OperationId = "food-product.create",
-            Tags = new[] {"FoodProductEndpoints"})
+            Tags = new[] { "FoodProductEndpoints" })
         ]
         public override async Task<ActionResult<CreateFoodProductResponse>> HandleAsync(
             CreateFoodProductRequest request, CancellationToken cancellationToken)
@@ -45,7 +43,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
                 Carbohydrates = request.Carbohydrates,
                 Fats = request.Fats,
                 Protein = request.Protein,
-                UnitOfMeasure = new UnitOfMeasure(request.UnitOfMeasureId)
+                UnitOfMeasureId = request.UnitOfMeasureId
             });
 
             response.FoodProduct = _mapper.Map<FoodProductDto>(newFoodProduct); ;

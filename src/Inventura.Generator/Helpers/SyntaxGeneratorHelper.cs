@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Text;
-using Microsoft.CodeAnalysis.CSharp;
+﻿using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Linq;
+using System.Text;
 
 namespace Inventura.Generator.Generators
 {
@@ -33,7 +33,7 @@ namespace Inventura.Generator.Generators
                 _specificationsSyntaxGenerator.GenerateSpecificationsNode(_modelClassName,
                     _propertiesHelper.AttributesWithInfo);
             var endpointsNode = _endpointSyntaxGenerator.GenerateEndpointsNode(_modelClassName,
-                _propertiesHelper.PropertiesWithAttributes, _propertiesHelper.PropertiesWithInfos, 
+                _propertiesHelper.PropertiesWithAttributes, _propertiesHelper.PropertiesWithInfos,
                 _propertiesHelper.AttributesWithInfo);
 
             var code = new StringBuilder();
