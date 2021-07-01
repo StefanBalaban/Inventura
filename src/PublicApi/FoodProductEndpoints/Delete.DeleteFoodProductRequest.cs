@@ -2,7 +2,6 @@
 {
     public class DeleteFoodProductRequest : BaseRequest
     {
-        //[FromRoute]
         public int FoodProductId { get; set; }
     }
 }

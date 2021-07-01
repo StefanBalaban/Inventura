@@ -1,24 +1,19 @@
 ﻿using Ardalis.Specification;
+using Inventura.ApplicationCore.Entities;
 
-namespace Inventura.ApplicationCore.Specifications.FoodProduct
+namespace Inventura.ApplicationCore.Specifications.FoodProductSpecs
 {
-    public class FoodProductFilterPaginatedSpecification : Specification<Entities.FoodProduct>
+    public class FoodProductFilterPaginatedSpecification : Specification<FoodProduct>
     {
-        public FoodProductFilterPaginatedSpecification(int skip,
-            int take,
-            int? unitOfMeasureId,
-            float? caloriesLTE,
-            float? caloriesGTE,
-            float? protein)
+        public FoodProductFilterPaginatedSpecification(int skip, int take, int? unitOfMeasureId, float? caloriesGTE, float? caloriesLTE, float? protein)
         {
-            Query
-                .Where(i => !unitOfMeasureId.HasValue || i.UnitOfMeasureId == unitOfMeasureId)
-                .Where(i => !caloriesLTE.HasValue || i.Calories <= caloriesLTE)
-                .Where(i => !caloriesGTE.HasValue || i.Calories >= caloriesGTE)
-                .Where(i => !protein.HasValue || i.Protein == protein)
-                .Skip(skip)
-                    .Take(take)
-                    .Include(x => x.UnitOfMeasure);
+            Query.Where(i => !unitOfMeasureId.HasValue || i.UnitOfMeasureId == unitOfMeasureId);
+            Query.Where(i => !caloriesGTE.HasValue || i.Calories >= caloriesGTE);
+            Query.Where(i => !caloriesLTE.HasValue || i.Calories <= caloriesLTE);
+            Query.Where(i => !protein.HasValue || i.Protein == protein);
+            Query.Skip(skip);
+            Query.Take(take);
+            Query.Include(x => x.UnitOfMeasure);
         }
     }
 }

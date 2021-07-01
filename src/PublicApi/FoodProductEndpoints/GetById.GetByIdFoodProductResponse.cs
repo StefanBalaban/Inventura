@@ -14,4 +14,5 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
 
         public FoodProductDto FoodProduct { get; set; }
     }
+
 }

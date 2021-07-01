@@ -24,7 +24,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
         [Fact]
         public async Task ReturnsItemGivenValidId()
         {
-            var response = await Client.GetAsync("api/food-product/5");
+            var response = await Client.GetAsync("api/foodproduct/5");
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
             var model = stringResponse.FromJson<GetByIdFoodProductResponse>();
@@ -36,7 +36,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
         [Fact]
         public async Task ReturnsNotFoundGivenInvalidId()
         {
-            var response = await Client.GetAsync("api/catalog-items/0");
+            var response = await Client.GetAsync("api/foodproduct/0");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

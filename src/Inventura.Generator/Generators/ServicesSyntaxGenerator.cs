@@ -48,7 +48,7 @@ namespace Inventura.Generator.Generators
                 deleteAsyncMethod
             };
 
-            var classDefinition = _generator.ClassDeclaration($"{_modelClassName}Services", null, Accessibility.Public,
+            var classDefinition = _generator.ClassDeclaration($"{_modelClassName}Service", null, Accessibility.Public,
                 DeclarationModifiers.None,
                 null,
                 members: members);
@@ -145,7 +145,7 @@ namespace Inventura.Generator.Generators
                                                 .WithTypeArgumentList(
                                                     TypeArgumentList(
                                                         SingletonSeparatedList<TypeSyntax>(
-                                                            IdentifierName(_modelClassName)))))
+                                                            IdentifierName($"{_modelClassName}Service")))))
                                 })))
                     .WithBody(
                         Block(
@@ -384,7 +384,7 @@ namespace Inventura.Generator.Generators
                                 ArgumentList(
                                     SingletonSeparatedList(
                                         Argument(
-                                            IdentifierName($"{_modelClassName}")))))))
+                                            IdentifierName($"{_modelClassName.ToCamelCase()}")))))))
             );
             listOfStatements.Add(
                 ReturnStatement(
@@ -704,7 +704,7 @@ namespace Inventura.Generator.Generators
                                             MemberAccessExpression(
                                                 SyntaxKind.SimpleMemberAccessExpression,
                                                 IdentifierName(_repositoryFieldName),
-                                                IdentifierName("ToListAsync"))))))))
+                                                IdentifierName("ListAllAsync"))))))))
                     .NormalizeWhitespace();
         }
     }

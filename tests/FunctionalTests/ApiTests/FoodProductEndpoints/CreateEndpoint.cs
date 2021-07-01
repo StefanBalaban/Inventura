@@ -34,7 +34,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
             var jsonContent = GetValidNewItemJson();
             var token = ApiTokenHelper.GetNormalUserToken();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await Client.PostAsync("api/food-product", jsonContent);
+            var response = await Client.PostAsync("api/foodproduct", jsonContent);
 
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
@@ -45,7 +45,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
             var jsonContent = GetValidNewItemJson();
             var adminToken = ApiTokenHelper.GetAdminUserToken();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
-            var response = await Client.PostAsync("api/food-product", jsonContent);
+            var response = await Client.PostAsync("api/foodproduct", jsonContent);
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
             var model = stringResponse.FromJson<CreateFoodProductResponse>();

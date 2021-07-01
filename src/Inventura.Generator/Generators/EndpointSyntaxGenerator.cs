@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Inventura.Generator.Helpers;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
@@ -317,7 +318,7 @@ namespace Inventura.Generator.Generators
                                     InvocationExpression(
                                         MemberAccessExpression(
                                             SyntaxKind.SimpleMemberAccessExpression,
-                                            IdentifierName($"_{_modelClassName.ToCamelCase()}"),
+                                            IdentifierName($"_{_modelClassName.ToCamelCase()}Service"),
                                             IdentifierName($"{helper.EndpointMethods[endpoint]}Async")))
                                     .WithArgumentList(
                                         ArgumentList(
@@ -409,7 +410,7 @@ namespace Inventura.Generator.Generators
                     .WithVariables(
                         SingletonSeparatedList<VariableDeclaratorSyntax>(
                             VariableDeclarator(
-                                Identifier($"{_modelClassName}s"))
+                                Identifier($"{_modelClassName.ToCamelCase()}s"))
                             .WithInitializer(
                                 EqualsValueClause(
                                     AwaitExpression(
@@ -462,39 +463,16 @@ namespace Inventura.Generator.Generators
                                                                 SingletonSeparatedList<TypeSyntax>(
                                                                     IdentifierName($"{_modelClassName}Dto")))))))))))))));
                 statements.Add(ExpressionStatement(
-                InvocationExpression(
+                AssignmentExpression(
+                    SyntaxKind.SimpleAssignmentExpression,
                     MemberAccessExpression(
                         SyntaxKind.SimpleMemberAccessExpression,
-                        MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            IdentifierName("response"),
-                            IdentifierName($"{_modelClassName}s")),
-                        IdentifierName("AddRange")))
-                .WithArgumentList(
-                    ArgumentList(
-                        SingletonSeparatedList<ArgumentSyntax>(
-                            Argument(
-                                InvocationExpression(
-                                    MemberAccessExpression(
-                                        SyntaxKind.SimpleMemberAccessExpression,
-                                        MemberAccessExpression(
-                                            SyntaxKind.SimpleMemberAccessExpression,
-                                            IdentifierName($"{_modelClassName.ToCamelCase()}s"),
-                                            IdentifierName("List")),
-                                        IdentifierName("Select")))
-                                .WithArgumentList(
-                                    ArgumentList(
-                                        SingletonSeparatedList<ArgumentSyntax>(
-                                            Argument(
-                                                MemberAccessExpression(
-                                                    SyntaxKind.SimpleMemberAccessExpression,
-                                                    IdentifierName("_mapper"),
-                                                    GenericName(
-                                                        Identifier("Map"))
-                                                    .WithTypeArgumentList(
-                                                        TypeArgumentList(
-                                                            SingletonSeparatedList<TypeSyntax>(
-                                                                IdentifierName($"{_modelClassName}Dto")))))))))))))));
+                        IdentifierName("response"),
+                        IdentifierName("PageCount")),
+                    MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        IdentifierName($"{_modelClassName.ToCamelCase()}s"),
+                        IdentifierName("Count")))));
             }
 
             if (endpoint.Equals("Create") || endpoint.Equals("Update"))

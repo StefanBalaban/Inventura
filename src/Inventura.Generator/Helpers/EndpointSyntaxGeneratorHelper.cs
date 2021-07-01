@@ -1,3 +1,4 @@
+using Inventura.Generator.Generators;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -5,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Inventura.Generator.Generators
+namespace Inventura.Generator.Helpers
 {
     internal class EndpointSyntaxGeneratorHelper
     {
@@ -27,7 +28,7 @@ namespace Inventura.Generator.Generators
                                     Token(SyntaxKind.PublicKeyword)))
                             .WithParameterList(
                                 ParameterList(
-                                    SingletonSeparatedList<ParameterSyntax>(
+                                    SingletonSeparatedList(
                                         Parameter(
                                             Identifier("correlationId"))
                                         .WithType(
@@ -36,7 +37,7 @@ namespace Inventura.Generator.Generators
                                 ConstructorInitializer(
                                     SyntaxKind.BaseConstructorInitializer,
                                     ArgumentList(
-                                        SingletonSeparatedList<ArgumentSyntax>(
+                                        SingletonSeparatedList(
                                             Argument(
                                                 IdentifierName("correlationId"))))))
                             .WithBody(
@@ -61,7 +62,7 @@ namespace Inventura.Generator.Generators
                                 Token(SyntaxKind.PublicKeyword)))
                         .WithAccessorList(
                             AccessorList(
-                                List<AccessorDeclarationSyntax>(
+                                List(
                                     new AccessorDeclarationSyntax[]{
                                             AccessorDeclaration(
                                                 SyntaxKind.GetAccessorDeclaration)
@@ -86,7 +87,7 @@ namespace Inventura.Generator.Generators
                 Token(SyntaxKind.PublicKeyword)))
         .WithAccessorList(
             AccessorList(
-                List<AccessorDeclarationSyntax>(
+                List(
                     new AccessorDeclarationSyntax[]{
                         AccessorDeclaration(
                             SyntaxKind.GetAccessorDeclaration)
@@ -120,7 +121,7 @@ namespace Inventura.Generator.Generators
                     Token(SyntaxKind.PublicKeyword)))
             .WithAccessorList(
                 AccessorList(
-                    List<AccessorDeclarationSyntax>(
+                    List(
                         new AccessorDeclarationSyntax[]{
                             AccessorDeclaration(
                                 SyntaxKind.GetAccessorDeclaration)
@@ -152,7 +153,7 @@ namespace Inventura.Generator.Generators
                     Token(SyntaxKind.PublicKeyword)))
             .WithAccessorList(
                 AccessorList(
-                    List<AccessorDeclarationSyntax>(
+                    List(
                         new AccessorDeclarationSyntax[]{
                             AccessorDeclaration(
                                 SyntaxKind.GetAccessorDeclaration)
@@ -162,7 +163,7 @@ namespace Inventura.Generator.Generators
                                 SyntaxKind.SetAccessorDeclaration)
                             .WithSemicolonToken(
                                 Token(SyntaxKind.SemicolonToken))})))});
-            return List<MemberDeclarationSyntax>(members);
+            return List(members);
         }
 
         public SeparatedSyntaxList<AttributeArgumentSyntax> GenerateAttributes()
@@ -206,7 +207,7 @@ namespace Inventura.Generator.Generators
                                                     LiteralExpression(
                                                         SyntaxKind.StringLiteralExpression,
                                                         Literal(
-                                                            $"api/{modelClassName.ToLower()}")))))))),
+                                                            $"api/{modelClassName.ToLower()}{(endpoint.Contains("Delete") || endpoint.Contains("GetById") ? "/{Id}" : null)}")))))))),
                         AttributeList(
                             SingletonSeparatedList(
                                 Attribute(
@@ -271,18 +272,18 @@ namespace Inventura.Generator.Generators
             if (endpoint.Equals("Delete") || endpoint.Equals("GetById"))
                 return
                     Parameter(Identifier("request")).WithAttributeLists(
-                            SingletonList<AttributeListSyntax>(
+                            SingletonList(
                                 AttributeList(
-                                    SingletonSeparatedList<AttributeSyntax>(
+                                    SingletonSeparatedList(
                                         Attribute(
                                             IdentifierName("FromRoute")))))).WithType(IdentifierName($"{endpoint}{modelClassName}Request"));
 
             if (endpoint.Equals("ListPaged"))
                 return
                      Parameter(Identifier("request")).WithAttributeLists(
-                            SingletonList<AttributeListSyntax>(
+                            SingletonList(
                                 AttributeList(
-                                    SingletonSeparatedList<AttributeSyntax>(
+                                    SingletonSeparatedList(
                                         Attribute(
                                             IdentifierName("FromQuery")))))).WithType(IdentifierName($"{endpoint}{modelClassName}Request"));
 
@@ -326,7 +327,7 @@ namespace Inventura.Generator.Generators
                                 Token(SyntaxKind.PublicKeyword)))
                         .WithAccessorList(
                             AccessorList(
-                                List<AccessorDeclarationSyntax>(
+                                List(
                                     new AccessorDeclarationSyntax[]{
                                     AccessorDeclaration(
                                             SyntaxKind.GetAccessorDeclaration)
@@ -347,7 +348,7 @@ namespace Inventura.Generator.Generators
                 Token(SyntaxKind.PublicKeyword)))
         .WithAccessorList(
             AccessorList(
-                List<AccessorDeclarationSyntax>(
+                List(
                     new AccessorDeclarationSyntax[]{
                         AccessorDeclaration(
                             SyntaxKind.GetAccessorDeclaration)
@@ -360,18 +361,59 @@ namespace Inventura.Generator.Generators
 
 
             if (endpoint.Equals("ListPaged"))
-                attributesWithInfo.ForEach(x =>
-                    x.Arguments.Where(y => y.Any() && !y.Contains("INCLUDE")).ToList().ForEach(y => list.Add(
+            {
+                list.Add(
                     PropertyDeclaration(
-                            IdentifierName(x.Type),
-                            Identifier($"{x.PropertyIdentifier}{argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))
-                        .WithModifiers(
-                            TokenList(
-                                Token(SyntaxKind.PublicKeyword)))
-                        .WithAccessorList(
-                            AccessorList(
-                                List<AccessorDeclarationSyntax>(
-                                    new AccessorDeclarationSyntax[]{
+                        IdentifierName("int"),
+                        Identifier($"PageIndex"))
+                    .WithModifiers(
+                        TokenList(
+                            Token(SyntaxKind.PublicKeyword)))
+                    .WithAccessorList(
+                        AccessorList(
+                            List(
+                                new AccessorDeclarationSyntax[]{
+                                    AccessorDeclaration(
+                                            SyntaxKind.GetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken)),
+                                    AccessorDeclaration(
+                                            SyntaxKind.SetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken))}))));
+                list.Add(
+    PropertyDeclaration(
+        IdentifierName("int"),
+        Identifier($"PageSize"))
+    .WithModifiers(
+        TokenList(
+            Token(SyntaxKind.PublicKeyword)))
+    .WithAccessorList(
+        AccessorList(
+            List(
+                new AccessorDeclarationSyntax[]{
+                                    AccessorDeclaration(
+                                            SyntaxKind.GetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken)),
+                                    AccessorDeclaration(
+                                            SyntaxKind.SetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken))}))));
+
+
+                attributesWithInfo.ForEach(x =>
+                x.Arguments.Where(y => y.Any() && !y.Contains("INCLUDE")).ToList().ForEach(y => list.Add(
+                PropertyDeclaration(
+                        IdentifierName(x.Type),
+                        Identifier($"{x.PropertyIdentifier}{argumentFilterConstantsHelpers.GetArgumentSufix(y)}"))
+                    .WithModifiers(
+                        TokenList(
+                            Token(SyntaxKind.PublicKeyword)))
+                    .WithAccessorList(
+                        AccessorList(
+                            List(
+                                new AccessorDeclarationSyntax[]{
                                     AccessorDeclaration(
                                             SyntaxKind.GetAccessorDeclaration)
                                         .WithSemicolonToken(
@@ -380,9 +422,10 @@ namespace Inventura.Generator.Generators
                                             SyntaxKind.SetAccessorDeclaration)
                                         .WithSemicolonToken(
                                             Token(SyntaxKind.SemicolonToken))}))))
-                ));
+            ));
+            }
 
-            return List<MemberDeclarationSyntax>(list);
+            return List(list);
         }
 
         public IEnumerable<ExpressionSyntax> GenerateServiceRequestObjectInitialization(string endpoint, List<KeyValuePair<string, string>> propertiesWithAttributes)

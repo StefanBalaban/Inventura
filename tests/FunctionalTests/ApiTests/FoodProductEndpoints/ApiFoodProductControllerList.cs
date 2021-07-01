@@ -22,7 +22,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
         [Fact]
         public async Task ReturnsFirst10CatalogItems()
         {
-            var response = await Client.GetAsync("/api/food-product?pageSize=10");
+            var response = await Client.GetAsync("/api/foodproduct?pageSize=10");
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
             var model = stringResponse.FromJson<ListPagedFoodProductResponse>();
@@ -33,7 +33,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
         [Fact]
         public async Task ReturnsLast2CatalogItemsGivenPageIndex1()
         {
-            var response = await Client.GetAsync("/api/food-product?pageSize=10&pageIndex=1");
+            var response = await Client.GetAsync("/api/foodproduct?pageSize=10&pageIndex=1");
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
             var model = stringResponse.FromJson<ListPagedFoodProductResponse>();

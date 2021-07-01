@@ -26,7 +26,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
         {
             var adminToken = ApiTokenHelper.GetAdminUserToken();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
-            var response = await Client.DeleteAsync("api/food-product/12");
+            var response = await Client.DeleteAsync("api/foodproduct/12");
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
             var model = stringResponse.FromJson<DeleteFoodProductResponse>();
@@ -39,7 +39,7 @@ namespace FunctionalTests.ApiTests.FoodProductEndpoints
         {
             var adminToken = ApiTokenHelper.GetAdminUserToken();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
-            var response = await Client.DeleteAsync("api/food-product/0");
+            var response = await Client.DeleteAsync("api/foodproduct/0");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

@@ -237,8 +237,7 @@ namespace Inventura.Generator.Generators
 
         private IEnumerable<SyntaxNodeOrToken> GetPaginatedSpecificationsConstructorParameters()
         {
-            var syntaxNodeOrTokenList = GetSpecificationsConstructorParameters().ToList();
-            syntaxNodeOrTokenList.Add(Token(SyntaxKind.CommaToken));
+            var syntaxNodeOrTokenList = new List<SyntaxNodeOrToken>();
             syntaxNodeOrTokenList.Add(Parameter(
                     Identifier("skip"))
                 .WithType(
@@ -250,6 +249,8 @@ namespace Inventura.Generator.Generators
                 .WithType(
                     PredefinedType(
                         Token(SyntaxKind.IntKeyword))));
+            syntaxNodeOrTokenList.Add(Token(SyntaxKind.CommaToken));
+            syntaxNodeOrTokenList.AddRange(GetSpecificationsConstructorParameters().ToList());
             return syntaxNodeOrTokenList;
         }
     }

@@ -12,43 +12,23 @@ using System.Threading.Tasks;
 namespace Inventura.PublicApi.Util.FoodProductEndpoints
 {
     [Authorize(Roles = "Administrators", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class Update : BaseAsyncEndpoint
-        .WithRequest<UpdateFoodProductRequest>
-        .WithResponse<UpdateFoodProductResponse>
+    public class Update : BaseAsyncEndpoint.WithRequest<UpdateFoodProductRequest>.WithResponse<UpdateFoodProductResponse>
     {
         private readonly IFoodProductService _foodProductService;
         private readonly IMapper _mapper;
-
-        public Update(IFoodProductService foodProductService)
+        public Update(IFoodProductService foodProductService, IMapper mapper)
         {
             _foodProductService = foodProductService;
+            _mapper = mapper;
         }
 
-        [HttpPut("api/food-product")]
-        [SwaggerOperation(
-            Summary = "Updates a Food Product",
-            Description = "Updates a Food Product",
-            OperationId = "food-product.update",
-            Tags = new[] { "FoodProductEndpoints" })
-        ]
-        public override async Task<ActionResult<UpdateFoodProductResponse>> HandleAsync(
-            UpdateFoodProductRequest request, CancellationToken cancellationToken)
+        [HttpPut("api/foodproduct")]
+        [SwaggerOperation(Summary = "Update FoodProduct", Description = "Update FoodProduct", OperationId = "foodproduct.update", Tags = new[] { "FoodProductEndpoints" })]
+        public override async Task<ActionResult<UpdateFoodProductResponse>> HandleAsync(UpdateFoodProductRequest request, CancellationToken cancellationToken)
         {
             var response = new UpdateFoodProductResponse(request.CorrelationId());
-
-            var updatedFoodProduct = await _foodProductService.PutAsync(
-                new FoodProduct
-                {
-                    Id = request.Id,
-                    Calories = request.Calories,
-                    Carbohydrates = request.Carbohydrates,
-                    Fats = request.Fats,
-                    Name = request.Name,
-                    Protein = request.Protein,
-                    UnitOfMeasureId = request.UnitOfMeasureId
-                });
-
-            response.FoodProduct = _mapper.Map<FoodProductDto>(updatedFoodProduct);
+            var foodProduct = await _foodProductService.PutAsync(new FoodProduct { Name = request.Name, UnitOfMeasureId = request.UnitOfMeasureId, Calories = request.Calories, Protein = request.Protein, Carbohydrates = request.Carbohydrates });
+            response.FoodProduct = _mapper.Map<FoodProductDto>(foodProduct);
             return response;
         }
     }
