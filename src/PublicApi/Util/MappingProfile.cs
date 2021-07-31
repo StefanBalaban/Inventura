@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Inventura.ApplicationCore.Entities;
-using Inventura.PublicApi.Util.FoodProductEndpoints;
+using ApplicationCore.Entities;
+using PublicApi.Util.FoodProductEndpoints;
 
-namespace Inventura.PublicApi.Util
+namespace PublicApi.Util
 {
     public class MappingProfile : Profile
     {

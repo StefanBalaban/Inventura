@@ -1,4 +1,4 @@
-﻿namespace Inventura.PublicApi.Util.FoodProductEndpoints
+﻿namespace PublicApi.Util.FoodProductEndpoints
 {
     public class CreateFoodProductRequest : BaseRequest
     {

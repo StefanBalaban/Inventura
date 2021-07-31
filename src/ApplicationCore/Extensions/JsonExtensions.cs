@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Inventura.ApplicationCore.Extensions
+namespace ApplicationCore.Extensions
 {
     public static class JsonExtensions
     {

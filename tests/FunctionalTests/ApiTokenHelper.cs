@@ -1,4 +1,4 @@
-﻿using Inventura.ApplicationCore.Constants;
+﻿using ApplicationCore.Constants;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;

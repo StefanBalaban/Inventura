@@ -1,12 +1,12 @@
 ﻿using Ardalis.ApiEndpoints;
 using AutoMapper;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+namespace PublicApi.Util.FoodProductEndpoints
 {
 
     public class GetById : BaseAsyncEndpoint.WithRequest<GetByIdFoodProductRequest>.WithResponse<GetByIdFoodProductResponse>

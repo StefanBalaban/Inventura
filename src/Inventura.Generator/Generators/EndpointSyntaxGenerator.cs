@@ -1,11 +1,11 @@
-﻿using Inventura.Generator.Helpers;
+﻿using Generator.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Inventura.Generator.Generators
+namespace Generator.Generators
 {
     internal class EndpointSyntaxGenerator
     {

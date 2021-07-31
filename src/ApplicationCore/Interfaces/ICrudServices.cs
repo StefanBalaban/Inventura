@@ -1,9 +1,9 @@
 ﻿using Ardalis.Specification;
-using Inventura.ApplicationCore.Entities;
+using ApplicationCore.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Inventura.ApplicationCore.Interfaces
+namespace ApplicationCore.Interfaces
 {
     public interface ICrudServices<T>
     {

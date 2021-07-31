@@ -1,4 +1,4 @@
-﻿namespace Inventura.Infrastructure.Data
+﻿namespace Infrastructure.Data
 {
     public class FileItem
     {

@@ -1,8 +1,8 @@
-﻿using Inventura.ApplicationCore.Constants;
+﻿using ApplicationCore.Constants;
 using Microsoft.CodeAnalysis.CSharp;
 using System.Collections.Generic;
 
-namespace Inventura.Generator.Generators
+namespace Generator.Generators
 {
     public class ArgumentFilterConstantsHelpers
     {

@@ -1,4 +1,4 @@
-﻿namespace Inventura.ApplicationCore.Constants
+﻿namespace ApplicationCore.Constants
 {
     public class FilterConstants
     {

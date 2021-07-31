@@ -1,4 +1,4 @@
-﻿namespace Inventura.ApplicationCore.Entities
+﻿namespace ApplicationCore.Entities
 {
     public class UnitOfMeasure : BaseEntity
     {

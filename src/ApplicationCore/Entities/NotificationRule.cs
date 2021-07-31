@@ -1,10 +1,10 @@
 ﻿using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Entities.UserAggregate;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Entities.UserAggregate;
+using ApplicationCore.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Inventura.ApplicationCore.Entities
+namespace ApplicationCore.Entities
 {
     public class NotificationRule : BaseEntity, IAggregateRoot
     {

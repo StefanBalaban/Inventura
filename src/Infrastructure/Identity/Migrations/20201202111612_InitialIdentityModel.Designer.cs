@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Inventura.Infrastructure.Identity;
+using Infrastructure.Identity;
 
-namespace Inventura.Infrastructure.Identity.Migrations
+namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
     [Migration("20201202111612_InitialIdentityModel")]

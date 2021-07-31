@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Inventura.Generator.Generators
+namespace Generator.Generators
 {
     public class AttributesWithInfo
     {

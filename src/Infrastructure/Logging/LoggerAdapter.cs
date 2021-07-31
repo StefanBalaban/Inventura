@@ -1,7 +1,7 @@
-﻿using Inventura.ApplicationCore.Interfaces;
+﻿using ApplicationCore.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace Inventura.Infrastructure.Logging
+namespace Infrastructure.Logging
 {
     public class LoggerAdapter<T> : IAppLogger<T>
     {

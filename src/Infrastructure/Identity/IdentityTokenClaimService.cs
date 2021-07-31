@@ -1,5 +1,5 @@
-﻿using Inventura.ApplicationCore.Constants;
-using Inventura.ApplicationCore.Interfaces;
+﻿using ApplicationCore.Constants;
+using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inventura.Infrastructure.Identity
+namespace Infrastructure.Identity
 {
     public class IdentityTokenClaimService : ITokenClaimsService
     {

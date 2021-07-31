@@ -1,11 +1,11 @@
 ﻿using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Entities.UserAggregate;
-using Inventura.ApplicationCore.Exceptions;
-using Inventura.ApplicationCore.Helpers;
+using ApplicationCore.Entities.UserAggregate;
+using ApplicationCore.Exceptions;
+using ApplicationCore.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Inventura.ApplicationCore.Extensions
+namespace ApplicationCore.Extensions
 {
     public static class BasketGuards
     {

@@ -1,6 +1,6 @@
-﻿using Inventura.ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 
-namespace Inventura.ApplicationCore.Interfaces
+namespace ApplicationCore.Interfaces
 {
     public interface IFoodProductService : ICrudServices<FoodProduct>
     {

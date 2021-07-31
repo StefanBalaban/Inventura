@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace Inventura.Infrastructure.Data
+namespace Infrastructure.Data
 {
     public class InventuraContextSeed
     {

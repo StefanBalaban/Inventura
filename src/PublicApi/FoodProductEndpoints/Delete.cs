@@ -1,6 +1,6 @@
 ﻿using Ardalis.ApiEndpoints;
 using AutoMapper;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+namespace PublicApi.Util.FoodProductEndpoints
 {
     [Authorize(Roles = "Administrators", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class Delete : BaseAsyncEndpoint.WithRequest<DeleteFoodProductRequest>.WithResponse<DeleteFoodProductResponse>
@@ -21,7 +21,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             _mapper = mapper;
         }
 
-        [HttpDelete("api/foodproduct/{FoodProductId}")] // TODO this and get by id
+        [HttpDelete("api/foodproduct/{FoodProductId}")]
         [SwaggerOperation(Summary = "Delete FoodProduct", Description = "Delete FoodProduct", OperationId = "foodproduct.delete", Tags = new[] { "FoodProductEndpoints" })]
         public override async Task<ActionResult<DeleteFoodProductResponse>> HandleAsync([FromRoute] DeleteFoodProductRequest request, CancellationToken cancellationToken)
         {

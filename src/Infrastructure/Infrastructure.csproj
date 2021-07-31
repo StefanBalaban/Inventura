@@ -19,7 +19,7 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationCore\Inventura.ApplicationCore.csproj" />
+    <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Config\" />

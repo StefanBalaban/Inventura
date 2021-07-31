@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Inventura.ApplicationCore.Entities.UserAggregate
+namespace ApplicationCore.Entities.UserAggregate
 {
     // TODO: Expand this to have Contact Type
     public class UserContactInfo : BaseEntity

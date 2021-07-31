@@ -1,4 +1,4 @@
-﻿namespace Inventura.PublicApi.Util
+﻿namespace PublicApi.Util
 {
     /// <summary>
     /// Base class used by API requests

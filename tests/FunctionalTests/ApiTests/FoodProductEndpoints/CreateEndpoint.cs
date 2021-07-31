@@ -1,5 +1,5 @@
-﻿using Inventura.ApplicationCore.Extensions;
-using Inventura.PublicApi.Util.FoodProductEndpoints;
+﻿using ApplicationCore.Extensions;
+using PublicApi.Util.FoodProductEndpoints;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;

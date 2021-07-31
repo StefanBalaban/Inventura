@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Inventura.ApplicationCore.Filters
+namespace ApplicationCore.Filters
 {
     public class PostAttribute : Attribute
     {

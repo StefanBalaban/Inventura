@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Inventura.Infrastructure.Data;
+using Infrastructure.Data;
 
-namespace Inventura.Infrastructure.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(InventuraContext))]
     internal partial class InventuraContextModelSnapshot : ModelSnapshot

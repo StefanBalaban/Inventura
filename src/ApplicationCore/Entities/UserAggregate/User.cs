@@ -1,10 +1,10 @@
 ﻿using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Extensions;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Extensions;
+using ApplicationCore.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Inventura.ApplicationCore.Entities.UserAggregate
+namespace ApplicationCore.Entities.UserAggregate
 {
     public class User : BaseEntity, IAggregateRoot
     {

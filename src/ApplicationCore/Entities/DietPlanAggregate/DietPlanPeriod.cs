@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using System;
 
-namespace Inventura.ApplicationCore.Entities.DietPlanAggregate
+namespace ApplicationCore.Entities.DietPlanAggregate
 {
     public class DietPlanPeriod : BaseEntity
     {

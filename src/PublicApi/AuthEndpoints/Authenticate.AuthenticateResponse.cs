@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Inventura.PublicApi.Util.AuthEndpoints
+namespace PublicApi.Util.AuthEndpoints
 {
     public class AuthenticateResponse : BaseResponse
     {

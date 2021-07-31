@@ -1,9 +1,9 @@
 ﻿using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Inventura.ApplicationCore.Entities.MealAggregate
+namespace ApplicationCore.Entities.MealAggregate
 {
     public class Meal : BaseEntity, IAggregateRoot
     {

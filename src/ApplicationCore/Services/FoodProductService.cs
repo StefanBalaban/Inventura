@@ -2,13 +2,13 @@
 
 using Ardalis.GuardClauses;
 using Ardalis.Specification;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Extensions;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Entities;
+using ApplicationCore.Extensions;
+using ApplicationCore.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Inventura.ApplicationCore.Services
+namespace ApplicationCore.Services
 {
     public class FoodProductService : IFoodProductService
     {

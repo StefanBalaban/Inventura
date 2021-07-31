@@ -1,9 +1,9 @@
 ﻿using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Entities.MealAggregate;
+using ApplicationCore.Entities.MealAggregate;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Inventura.ApplicationCore.Entities.DietPlanAggregate
+namespace ApplicationCore.Entities.DietPlanAggregate
 {
     public class DietPlan : BaseEntity
     {

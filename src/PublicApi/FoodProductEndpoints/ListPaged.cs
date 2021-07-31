@@ -1,7 +1,7 @@
 ﻿using Ardalis.ApiEndpoints;
 using AutoMapper;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.ApplicationCore.Specifications.FoodProductSpecs;
+using ApplicationCore.Interfaces;
+using ApplicationCore.Specifications.FoodProductSpecs;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+namespace PublicApi.Util.FoodProductEndpoints
 {
 
     public class ListPaged : BaseAsyncEndpoint.WithRequest<ListPagedFoodProductRequest>.WithResponse<ListPagedFoodProductResponse>
@@ -31,7 +31,7 @@ namespace Inventura.PublicApi.Util.FoodProductEndpoints
             var pagedSpec = new FoodProductFilterPaginatedSpecification(request.PageIndex * request.PageSize, request.PageSize, request.UnitOfMeasureId, request.CaloriesGTE, request.CaloriesLTE, request.Protein);
             var foodProducts = await _foodProductService.GetAsync(filterSpec, pagedSpec);
             response.FoodProducts.AddRange(foodProducts.List.Select(_mapper.Map<FoodProductDto>));
-            response.PageCount = foodProducts.Count; // TODO Add this instead of whatever is now
+            response.PageCount = foodProducts.Count; 
             return Ok(response);
         }
     }

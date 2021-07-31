@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace Inventura.Infrastructure.Identity.Migrations
+namespace Infrastructure.Identity.Migrations
 {
     public partial class InitialIdentityModel : Migration
     {

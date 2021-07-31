@@ -1,4 +1,4 @@
-﻿namespace Inventura.Generator.Generators
+﻿namespace Generator.Generators
 {
     public class PropertiesWithInfo
     {

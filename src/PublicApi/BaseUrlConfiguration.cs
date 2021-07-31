@@ -1,4 +1,4 @@
-﻿namespace Inventura.PublicApi
+﻿namespace PublicApi
 {
     public class BaseUrlConfiguration
     {

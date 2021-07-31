@@ -1,8 +1,8 @@
 ﻿using FunctionalTests;
 using System.Linq;
 using System.Net.Http;
-using Inventura.PublicApi.Util.FoodProductEndpoints;
-using Inventura.ApplicationCore.Extensions;
+using PublicApi.Util.FoodProductEndpoints;
+using ApplicationCore.Extensions;
 using System.Threading.Tasks;
 using Xunit;
 using System.Collections.Generic;

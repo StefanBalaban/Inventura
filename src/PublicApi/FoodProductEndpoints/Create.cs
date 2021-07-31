@@ -1,7 +1,7 @@
 ﻿using Ardalis.ApiEndpoints;
 using AutoMapper;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+namespace PublicApi.Util.FoodProductEndpoints
 {
     [Authorize(Roles = "Administrators", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class Create : BaseAsyncEndpoint.WithRequest<CreateFoodProductRequest>.WithResponse<CreateFoodProductResponse>

@@ -1,5 +1,5 @@
-using Inventura.Infrastructure.Data;
-using Inventura.Infrastructure.Identity;
+using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace Inventura.PublicApi.Util
+namespace PublicApi.Util
 {
     public class Program
     {

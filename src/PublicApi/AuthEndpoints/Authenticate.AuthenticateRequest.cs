@@ -1,4 +1,4 @@
-﻿namespace Inventura.PublicApi.Util.AuthEndpoints
+﻿namespace PublicApi.Util.AuthEndpoints
 {
     public class AuthenticateRequest : BaseRequest
     {

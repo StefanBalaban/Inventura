@@ -4,9 +4,9 @@ VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{419A6ACE-0419-4315-A6FB-B0E63D39432E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventura.Infrastructure", "src\Infrastructure\Inventura.Infrastructure.csproj", "{7C461394-ABDC-43CD-A798-71249C58BA67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{7C461394-ABDC-43CD-A798-71249C58BA67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventura.ApplicationCore", "src\ApplicationCore\Inventura.ApplicationCore.csproj", "{7FED7440-2311-4D1E-958B-3E887C585CD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "src\ApplicationCore\ApplicationCore.csproj", "{7FED7440-2311-4D1E-958B-3E887C585CD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{15EA4737-125B-4E6E-A806-E13B7EBCDCCF}"
 EndProject
@@ -20,11 +20,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1FCBE191-34FE-4B2E-8915-CA81553958AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventura.PublicApi", "src\PublicApi\Inventura.PublicApi.csproj", "{B5E4F33C-4667-4A55-AF6A-740F84C4CF3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublicApi", "src\PublicApi\PublicApi.csproj", "{B5E4F33C-4667-4A55-AF6A-740F84C4CF3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventura.Generator", "src\Inventura.Generator\Inventura.Generator.csproj", "{20EE60B3-3EE1-4303-B1E5-1C45F59981B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "src\Inventura.Generator\Generator.csproj", "{20EE60B3-3EE1-4303-B1E5-1C45F59981B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "tests\FunctionalTests\FunctionalTests.csproj", "{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests", "tests\FunctionalTests\FunctionalTests.csproj", "{CDF5C585-2D2A-40F9-92E6-E8ACFCC73B57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

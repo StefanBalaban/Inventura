@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Inventura.PublicApi.Util
+namespace PublicApi.Util
 {
     public class CustomSchemaFilters : ISchemaFilter
     {

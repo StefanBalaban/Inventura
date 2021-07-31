@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
 using System.Text;
 
-namespace Inventura.Generator.Generators
+namespace Generator.Generators
 {
     public class SyntaxGeneratorHelper
     {

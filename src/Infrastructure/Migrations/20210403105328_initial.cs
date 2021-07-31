@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace Inventura.Infrastructure.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class initial : Migration
     {

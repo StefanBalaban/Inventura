@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Inventura.PublicApi.Util.AuthEndpoints
+namespace PublicApi.Util.AuthEndpoints
 {
     public class UserInfo
     {

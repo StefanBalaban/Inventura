@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Inventura.ApplicationCore.Entities
+namespace ApplicationCore.Entities
 {
     public class ListEntity<T>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Inventura.ApplicationCore.Interfaces
+namespace ApplicationCore.Interfaces
 {
     public interface ITokenClaimsService
     {

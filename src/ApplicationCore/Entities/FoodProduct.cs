@@ -1,11 +1,11 @@
 ﻿using Ardalis.GuardClauses;
-using Inventura.ApplicationCore.Constants;
-using Inventura.ApplicationCore.Filters;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Constants;
+using ApplicationCore.Filters;
+using ApplicationCore.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Inventura.ApplicationCore.Entities
+namespace ApplicationCore.Entities
 {
     public class FoodProduct : BaseEntity, IAggregateRoot
     {

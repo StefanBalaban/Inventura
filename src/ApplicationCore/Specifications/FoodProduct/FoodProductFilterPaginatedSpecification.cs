@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
-using Inventura.ApplicationCore.Entities;
+using ApplicationCore.Entities;
 
-namespace Inventura.ApplicationCore.Specifications.FoodProductSpecs
+namespace ApplicationCore.Specifications.FoodProductSpecs
 {
     public class FoodProductFilterPaginatedSpecification : Specification<FoodProduct>
     {

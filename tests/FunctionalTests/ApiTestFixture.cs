@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Inventura.Infrastructure.Data;
-using Inventura.Infrastructure.Identity;
-using Inventura.PublicApi.Util;
+using Infrastructure.Data;
+using Infrastructure.Identity;
+using PublicApi.Util;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;

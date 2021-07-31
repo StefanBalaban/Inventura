@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using System;
 
-namespace Inventura.ApplicationCore.Entities
+namespace ApplicationCore.Entities
 {
     public class FoodStock : BaseEntity
     {

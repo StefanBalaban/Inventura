@@ -1,9 +1,9 @@
-﻿using Inventura.ApplicationCore.Exceptions;
+﻿using ApplicationCore.Exceptions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Inventura.ApplicationCore.Helpers
+namespace ApplicationCore.Helpers
 {
     internal class ModelStateValidationHelper
     {

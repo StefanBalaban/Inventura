@@ -1,11 +1,11 @@
 using AutoMapper;
-using Inventura.ApplicationCore.Constants;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.ApplicationCore.Services;
-using Inventura.Infrastructure.Data;
-using Inventura.Infrastructure.Identity;
-using Inventura.Infrastructure.Logging;
+using ApplicationCore.Constants;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
+using Infrastructure.Data;
+using Infrastructure.Identity;
+using Infrastructure.Logging;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,7 +20,7 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Inventura.PublicApi.Util
+namespace PublicApi.Util
 {
     public class Startup
     {

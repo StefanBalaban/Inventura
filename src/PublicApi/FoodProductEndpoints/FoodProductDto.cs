@@ -1,6 +1,6 @@
-﻿using Inventura.ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+namespace PublicApi.Util.FoodProductEndpoints
 {
     public class FoodProductDto
     {

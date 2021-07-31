@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Inventura.ApplicationCore.Exceptions
+namespace ApplicationCore.Exceptions
 {
     public class ModelStateInvalidException : Exception
     {

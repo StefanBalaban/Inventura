@@ -1,8 +1,8 @@
-﻿using Inventura.ApplicationCore.Constants;
+﻿using ApplicationCore.Constants;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
-namespace Inventura.Infrastructure.Identity
+namespace Infrastructure.Identity
 {
     public class AppIdentityDbContextSeed
     {

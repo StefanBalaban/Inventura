@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Inventura.Infrastructure.Identity
+namespace Infrastructure.Identity
 {
     public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
     {

@@ -1,13 +1,13 @@
 ﻿using Ardalis.ApiEndpoints;
-using Inventura.ApplicationCore.Interfaces;
-using Inventura.Infrastructure.Identity;
+using ApplicationCore.Interfaces;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Inventura.PublicApi.Util.AuthEndpoints
+namespace PublicApi.Util.AuthEndpoints
 {
     public class Authenticate : BaseAsyncEndpoint
         .WithRequest<AuthenticateRequest>

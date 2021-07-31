@@ -1,14 +1,14 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
-using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Interfaces;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Inventura.Infrastructure.Data
+namespace Infrastructure.Data
 {
     /// <summary>
     ///     "There's some repetition here - couldn't we have some the sync methods call the async?"

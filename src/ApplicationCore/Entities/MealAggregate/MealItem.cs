@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Inventura.ApplicationCore.Entities.MealAggregate
+namespace ApplicationCore.Entities.MealAggregate
 {
     public class MealItem : BaseEntity
     {

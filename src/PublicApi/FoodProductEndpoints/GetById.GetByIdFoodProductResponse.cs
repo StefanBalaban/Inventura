@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Inventura.PublicApi.Util.FoodProductEndpoints
+namespace PublicApi.Util.FoodProductEndpoints
 {
     public class GetByIdFoodProductResponse : BaseResponse
     {

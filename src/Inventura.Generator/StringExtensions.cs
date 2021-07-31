@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Inventura.Generator.Generators
+namespace Generator.Generators
 {
     public static class StringExtensions
     {

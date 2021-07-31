@@ -1,11 +1,11 @@
-﻿using Inventura.ApplicationCore.Entities;
-using Inventura.ApplicationCore.Entities.DietPlanAggregate;
-using Inventura.ApplicationCore.Entities.MealAggregate;
-using Inventura.ApplicationCore.Entities.UserAggregate;
+﻿using ApplicationCore.Entities;
+using ApplicationCore.Entities.DietPlanAggregate;
+using ApplicationCore.Entities.MealAggregate;
+using ApplicationCore.Entities.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Inventura.Infrastructure.Data
+namespace Infrastructure.Data
 {
     public class InventuraContext : DbContext
     {
